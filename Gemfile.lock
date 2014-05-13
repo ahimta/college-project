@@ -14,8 +14,6 @@ GEM
       activesupport (= 4.1.1)
       builder (~> 3.1)
       erubis (~> 2.7.0)
-    active_model_serializers (0.8.1)
-      activemodel (>= 3.0)
     activemodel (4.1.1)
       activesupport (= 4.1.1)
       builder (~> 3.1)
@@ -249,7 +247,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_model_serializers (~> 0.8.1)
   brakeman (~> 2.4.3)
   codeclimate-test-reporter
   factory_girl_rails (~> 4.4.1)
