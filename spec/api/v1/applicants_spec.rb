@@ -34,28 +34,39 @@ describe V1::Applicants do
     before { expect(Applicant.count).to be_zero }
 
     context 'valid' do
-      let(:params) { {applicant: FactoryGirl.attributes_for(:applicant)} }
-
-      it { action }
-
-      after { expect(json_response).to eq({'applicant' => JSON.parse(Applicant.first.to_json)}) }
-      after { expect(response.status).to eq(201) }
       after { expect(Applicant.count).to eq(1) }
+
+      context 'valid attributes' do
+        let(:params) { {applicant: FactoryGirl.attributes_for(:applicant)} }
+
+        it { action }
+
+        after { expect(json_response).to eq({'applicant' => JSON.parse(Applicant.first.to_json)}) }
+        after { expect(response.status).to eq(201) }
+      end
+
+      context 'parameters' do
+        let(:params) {
+          {applicant: FactoryGirl.attributes_for(:applicant).update(xyz: 'hi') }
+        }
+
+        it { action }
+
+        after { expect(json_response).to eq({'applicant' => JSON.parse(Applicant.first.to_json)}) }
+        after { expect(response.status).to eq(201) }
+      end
     end
 
     context 'invalid' do
-      let(:params) { {applicant: FactoryGirl.attributes_for(:invalid_applicant)} }
-      let(:errors) {
-        applicant = Applicant.new params[:applicant]
-        applicant.valid?
-        {'errors' => JSON.parse(applicant.errors.to_json)}
-      }
-
-      it { action }
-
-      after { expect(json_response).to eq(errors) }
-      after { expect(response.status).to eq(400) }
       after { expect(Applicant.count).to be_zero }
+
+      context 'values' do
+        let(:params) { {applicant: FactoryGirl.attributes_for(:invalid_applicant)} }
+
+        it { action }
+
+        after { expect(response.status).to eq(400) }
+      end
     end
   end
 end
