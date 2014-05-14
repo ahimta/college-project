@@ -2,11 +2,11 @@
 
 FactoryGirl.define do
   factory :applicant do
-    first_name "MyString"
-    last_name "MyString"
-    phone "MyString"
-    address "MyString"
-    specialization "MyString"
-    degree "MyString"
+    sequence(:first_name)     { |n| "first_name#{n}" }
+    sequence(:last_name)      { |n| "last_name#{n}" }
+    sequence(:phone)          { |n| "phone#{n}" }
+    sequence(:address)        { |n| "address#{n}" }
+    sequence(:specialization) { |n| "specialization#{n}" }
+    sequence(:degree)         { |n| "degree#{n}" }
   end
 end
