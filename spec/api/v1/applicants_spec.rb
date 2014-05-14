@@ -4,12 +4,15 @@ describe V1::Applicants do
 
   describe 'GET /api/v1/applicants' do
     let(:action) { get '/api/v1/applicants' }
+    
+    before { expect(Applicant.count).to be_zero }
 
     context 'empty' do
       it { action }
 
       after { expect(json_response).to eq({'applicants' => []}) }
       after { expect(response.status).to eq(200) }
+      after { expect(Applicant.count).to be_zero }
     end
 
     context 'not empty' do
@@ -20,6 +23,7 @@ describe V1::Applicants do
 
       after { expect(json_response).to eq({'applicants' => JSON.parse(Applicant.all.to_json)}) }
       after { expect(json_response['applicants'].length).to eq(count) }
+      after { expect(Applicant.count).to eq(count) }
       after { expect(response.status).to eq(200) }
     end
   end
