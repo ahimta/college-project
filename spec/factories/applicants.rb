@@ -8,5 +8,9 @@ FactoryGirl.define do
     sequence(:address)        { |n| "address#{n}" }
     sequence(:specialization) { |n| "specialization#{n}" }
     sequence(:degree)         { |n| "degree#{n}" }
+
+    factory :invalid_applicant do
+    	phone ''
+    end
   end
 end
