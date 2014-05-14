@@ -3,8 +3,10 @@ require 'spec_helper'
 describe V1::Applicants do
 
   describe 'GET /api/v1/applicants' do
+    let(:action) { get '/api/v1/applicants' }
+
     context 'empty' do
-      before { get '/api/v1/applicants' }
+      before { action }
 
       it { expect(json_response).to eq({'applicants' => []}) }
       it { expect(response.status).to eq(200) }
@@ -14,7 +16,7 @@ describe V1::Applicants do
       let!(:records) { FactoryGirl.create_list :applicant, count }
       let(:count) { 3 }
 
-      before { get '/api/v1/applicants' }
+      before { action }
 
       it { expect(json_response).to eq({'applicants' => JSON.parse(Applicant.all.to_json)}) }
       it { expect(json_response['applicants'].length).to eq(count) }
