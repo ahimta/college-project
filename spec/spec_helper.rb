@@ -12,6 +12,12 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
+module MyHelpers
+  def json_response
+    @json_response ||= JSON.parse response.body
+  end
+end
+
 RSpec.configure do |config|
   # ## Mock Framework
   #
@@ -45,4 +51,8 @@ RSpec.configure do |config|
   config.include RSpec::Rails::RequestExampleGroup, type: :request, example_group: {
     file_path: /spec\/api/
   }
+
+
+  # I added
+  config.include MyHelpers
 end
