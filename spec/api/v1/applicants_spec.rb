@@ -28,6 +28,22 @@ describe V1::Applicants do
     end
   end
 
+  describe 'GET /api/v1/applicants/:id' do
+    context 'exists' do
+      let!(:record) { FactoryGirl.create :applicant }
+
+      it { get "/api/v1/applicants/#{record.id}" }
+
+      after { expect(json_response).to eq({'applicant' => JSON.parse(Applicant.first.to_json)})}
+      after { expect(response.status).to eq(200) }
+    end
+    context 'does not exist' do
+      it { get '/api/v1/applicants/99' }
+
+      after { expect(response.status).to eq(404) }
+    end
+  end
+
   describe 'POST /api/v1/applicants' do
     let(:action) { post '/api/v1/applicants', params }
 
@@ -45,7 +61,7 @@ describe V1::Applicants do
         after { expect(response.status).to eq(201) }
       end
 
-      context 'parameters' do
+      context 'with unsupported' do
         let(:params) {
           {applicant: FactoryGirl.attributes_for(:applicant).update(xyz: 'hi') }
         }

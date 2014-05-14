@@ -46,5 +46,15 @@ class V1::Applicants < Grape::API
     post do
       present :applicant, Applicant.create!(safe_params)
     end
+
+    route_param :id, type: Integer do
+      get do
+        applicant = Applicant.where(id: params[:id]).first
+        
+        if applicant then present :applicant, applicant
+        else error!('Not found', 404)
+        end
+      end
+    end
   end
 end
