@@ -24,10 +24,7 @@ class API::V1::Applicants < Grape::API
       end
 
       def safe_params
-        attrs = params[:applicant]
-        @safe_params ||= {first_name: attrs[:first_name], last_name: attrs[:last_name],
-          phone: attrs[:phone], address: attrs[:address], specialization: attrs[:specialization],
-          degree: attrs[:degree]}
+        @safe_params ||= declared(params, include_missing: false)[:applicant]
       end
     end
 
