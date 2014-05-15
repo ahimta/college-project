@@ -1,4 +1,4 @@
-class V1::Present < Grape::Validations::Validator
+class API::V1::Present < Grape::Validations::Validator
   def validate_param!(attr_name, params)
     unless params[attr_name].present?
       raise Grape::Exceptions::Validation, param: @scope.full_name(attr_name), message: "can't be blank"
@@ -6,11 +6,8 @@ class V1::Present < Grape::Validations::Validator
   end
 end
 
-class V1::Applicants < Grape::API
-
-  version 'v1', using: :path
-  default_format :json
-  format :json
+class API::V1::Applicants < Grape::API
+  include API::V1::Defaults
 
 
   resource :applicants do
@@ -49,11 +46,7 @@ class V1::Applicants < Grape::API
 
     route_param :id, type: Integer do
       get do
-        applicant = Applicant.where(id: params[:id]).first
-        
-        if applicant then present :applicant, applicant
-        else error!('Not found', 404)
-        end
+        present :applicant, Applicant.find(params[:id])
       end
     end
   end

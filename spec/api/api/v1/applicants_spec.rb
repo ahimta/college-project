@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe V1::Applicants do
+describe API::V1::Applicants do
 
   describe 'GET /api/v1/applicants' do
     let(:action) { get '/api/v1/applicants' }
