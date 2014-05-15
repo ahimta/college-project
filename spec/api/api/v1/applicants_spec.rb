@@ -18,13 +18,14 @@ describe API::V1::Applicants do
     end
 
     context 'not empty' do
+      let(:expected_records) { {'applicants' => JSON.parse(Applicant.order('id').to_json)} }
       let!(:records) { FactoryGirl.create_list :applicant, count }
       let(:count) { 3 }
 
       it { action }
 
-      after { expect(json_response).to eq({'applicants' => JSON.parse(Applicant.order('id').to_json)}) }
       after { expect(json_response['applicants'].length).to eq(count) }
+      after { expect(json_response).to eq(expected_records) }
       after { expect(Applicant.count).to eq(count) }
       after { expect(response.status).to eq(200) }
     end
