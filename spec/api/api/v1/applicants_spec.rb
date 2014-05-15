@@ -52,39 +52,24 @@ describe API::V1::Applicants do
     before { expect(Applicant.count).to be_zero }
 
     context 'valid' do
+      let(:params) {
+        {applicant: FactoryGirl.attributes_for(:applicant).update(xyz: 'hi') }
+      }
+
+      it { action }
+
+      after { expect(json_response).to eq(expected_record) }
+      after { expect(response.status).to eq(201) }
       after { expect(Applicant.count).to eq(1) }
-
-      context 'valid attributes' do
-        let(:params) { {applicant: FactoryGirl.attributes_for(:applicant)} }
-
-        it { action }
-
-        after { expect(json_response).to eq(expected_record) }
-        after { expect(response.status).to eq(201) }
-      end
-
-      context 'with unsupported' do
-        let(:params) {
-          {applicant: FactoryGirl.attributes_for(:applicant).update(xyz: 'hi') }
-        }
-
-        it { action }
-
-        after { expect(json_response).to eq(expected_record) }
-        after { expect(response.status).to eq(201) }
-      end
     end
 
     context 'invalid' do
+      let(:params) { {applicant: FactoryGirl.attributes_for(:invalid_applicant)} }
+
+      it { action }
+
+      after { expect(response.status).to eq(400) }
       after { expect(Applicant.count).to be_zero }
-
-      context 'values' do
-        let(:params) { {applicant: FactoryGirl.attributes_for(:invalid_applicant)} }
-
-        it { action }
-
-        after { expect(response.status).to eq(400) }
-      end
     end
   end
 
