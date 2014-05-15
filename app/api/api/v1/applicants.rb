@@ -41,7 +41,7 @@ class API::V1::Applicants < Grape::API
       present :applicant, Applicant.create!(safe_params)
     end
 
-    route_param :id, type: Integer do
+    route_param :id, type: Integer, desc: 'Applicant id.' do
       get do
         present :applicant, Applicant.find(params[:id])
       end
