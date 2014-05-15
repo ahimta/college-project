@@ -42,8 +42,20 @@ class API::V1::Applicants < Grape::API
     end
 
     route_param :id, type: Integer, desc: 'Applicant id.' do
+      desc 'Get an applicant by id.'
       get do
         present :applicant, Applicant.find(params[:id])
+      end
+
+      desc 'Update an applicant.'
+      params do
+        use :applicant
+      end
+      put do
+        applicant = Applicant.find(params[:id])
+        applicant.update! safe_params
+        
+        present :applicant, applicant
       end
     end
   end

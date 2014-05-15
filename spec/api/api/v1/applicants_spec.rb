@@ -85,4 +85,38 @@ describe API::V1::Applicants do
       end
     end
   end
+
+  describe 'PUT /api/v1/applicants/:id' do
+    let(:action) { put "/api/v1/applicants/#{record.id}", params }
+    let!(:record) { FactoryGirl.create :applicant }
+    let(:count) { 1 }
+
+    before { expect(Applicant.count).to eq(count) }
+    after { expect(Applicant.count).to eq(count) }
+
+    context 'does not exist' do
+      it { put '/api/v1/applicants/99', {applicant: FactoryGirl.attributes_for(:applicant)} }
+
+      after { expect(response.status).to eq(404) }
+    end
+
+    context 'valid' do
+      let(:params) { { applicant: FactoryGirl.attributes_for(:applicant).update(xyz: 'aa') } }
+
+      it { action }
+
+      after { expect(json_response).to eq({'applicant' => JSON.parse(Applicant.first.to_json)}) }
+      after { expect(Applicant.first.attributes.to_s).to_not eq(record.attributes.to_s) }
+      after { expect(response.status).to eq(200) }
+    end
+
+    context 'invalid' do
+      let(:params) { { applicant: FactoryGirl.attributes_for(:invalid_applicant) } }
+      
+      it { action }
+
+      after { expect(Applicant.first.attributes.to_s).to eq(record.attributes.to_s) }
+      after { expect(response.status).to eq(400) }
+    end
+  end
 end
