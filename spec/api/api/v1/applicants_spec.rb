@@ -23,7 +23,7 @@ describe API::V1::Applicants do
 
       it { action }
 
-      after { expect(json_response).to eq({'applicants' => JSON.parse(Applicant.all.to_json)}) }
+      after { expect(json_response).to eq({'applicants' => JSON.parse(Applicant.order('id').to_json)}) }
       after { expect(json_response['applicants'].length).to eq(count) }
       after { expect(Applicant.count).to eq(count) }
       after { expect(response.status).to eq(200) }
