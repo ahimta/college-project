@@ -54,8 +54,13 @@ class API::V1::Applicants < Grape::API
       put do
         applicant = Applicant.find(params[:id])
         applicant.update! safe_params
-        
+
         present :applicant, applicant
+      end
+
+      desc 'Delete an applicant.'
+      delete do
+        present :applicant, Applicant.find(params[:id]).destroy
       end
     end
   end

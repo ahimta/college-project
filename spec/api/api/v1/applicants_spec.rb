@@ -119,4 +119,24 @@ describe API::V1::Applicants do
       after { expect(response.status).to eq(400) }
     end
   end
+
+  describe 'DELETE /api/v1/applicants/:id' do
+    let!(:record) { FactoryGirl.create :applicant }
+    let(:count) { 1 }
+
+    before { expect(Applicant.count).to eq(1) }
+
+    context 'exist' do
+      it { delete "/api/v1/applicants/#{record.id}" }
+
+      after { expect(json_response).to eq({'applicant' => JSON.parse(record.to_json)}) }
+      after { expect(Applicant.count).to be_zero }
+    end
+
+    context 'does not exist' do
+      it { delete '/api/v1/applicants/99' }
+
+      after { expect(response.status).to eq(404) }
+    end
+  end
 end
