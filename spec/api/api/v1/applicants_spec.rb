@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe API::V1::Applicants do
 
+  let(:expected_record) { {'applicant' => JSON.parse(Applicant.first.to_json)} }
+
   describe 'GET /api/v1/applicants' do
     let(:action) { get '/api/v1/applicants' }
     
@@ -34,7 +36,7 @@ describe API::V1::Applicants do
 
       it { get "/api/v1/applicants/#{record.id}" }
 
-      after { expect(json_response).to eq({'applicant' => JSON.parse(Applicant.first.to_json)})}
+      after { expect(json_response).to eq(expected_record) }
       after { expect(response.status).to eq(200) }
     end
     context 'does not exist' do
@@ -57,7 +59,7 @@ describe API::V1::Applicants do
 
         it { action }
 
-        after { expect(json_response).to eq({'applicant' => JSON.parse(Applicant.first.to_json)}) }
+        after { expect(json_response).to eq(expected_record) }
         after { expect(response.status).to eq(201) }
       end
 
@@ -68,7 +70,7 @@ describe API::V1::Applicants do
 
         it { action }
 
-        after { expect(json_response).to eq({'applicant' => JSON.parse(Applicant.first.to_json)}) }
+        after { expect(json_response).to eq(expected_record) }
         after { expect(response.status).to eq(201) }
       end
     end
@@ -105,7 +107,7 @@ describe API::V1::Applicants do
 
       it { action }
 
-      after { expect(json_response).to eq({'applicant' => JSON.parse(Applicant.first.to_json)}) }
+      after { expect(json_response).to eq(expected_record) }
       after { expect(Applicant.first.attributes.to_s).to_not eq(record.attributes.to_s) }
       after { expect(response.status).to eq(200) }
     end
