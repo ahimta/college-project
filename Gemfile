@@ -5,13 +5,14 @@ ruby '2.1.2'
 gem 'rails', '~> 4.1.0'
 
 gem 'sdoc', '~> 0.4.0', group: :doc
+
 gem 'rails-i18n', '~> 4.0.2'
 gem 'kaminari', '~> 0.15.1'
 gem 'grape', '~> 0.7.0'
+gem 'factory_girl_rails', '~> 4.4.1'
 # gem 'active_model_serializers', '~> 0.8.1'
 
 group :development, :test do
-  gem 'factory_girl_rails', '~> 4.4.1'
   gem 'rspec-rails', '~> 2.14.2'
   gem 'sqlite3', '~> 1.3.9'
 end
