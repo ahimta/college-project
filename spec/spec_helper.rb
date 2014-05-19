@@ -20,6 +20,10 @@ module MyHelpers
   def serialized_record(entity, record)
     JSON.parse entity.represent(record).to_json
   end
+
+  def generate_params(factory, name)
+    { name => FactoryGirl.attributes_for(factory).update(xyz: 'aa') }
+  end
 end
 
 RSpec.configure do |config|

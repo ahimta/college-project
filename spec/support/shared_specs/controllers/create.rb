@@ -12,9 +12,7 @@ shared_examples 'controllers/create' do |model, entity, resource, factories|
 
     context 'valid' do
       factories[:valid].each do |factory|
-        let(:params) {
-          {name => FactoryGirl.attributes_for(factory).update(xyz: 'hi') }
-        }
+        let(:params) { generate_params(factory, name) }
 
         it { action }
 
@@ -26,7 +24,7 @@ shared_examples 'controllers/create' do |model, entity, resource, factories|
 
     context 'invalid' do
       factories[:invalid].each do |factory|
-        let(:params) { {name => FactoryGirl.attributes_for(factory)} }
+        let(:params) { generate_params(factory, name) }
 
         it { action }
 

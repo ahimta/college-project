@@ -14,14 +14,14 @@ shared_examples 'controllers/update' do |model, entity, resource, factories|
     after { expect(model.count).to eq(count) }
 
     context 'does not exist' do
-      it { put "#{url}/99", {name => FactoryGirl.attributes_for(name)} }
+      it { put "#{url}/99", generate_params(name, name) }
 
       after { expect(response.status).to eq(404) }
     end
 
     context 'valid' do
       factories[:valid].each do |factory|
-        let(:params) { { name => FactoryGirl.attributes_for(factory).update(xyz: 'aa') } }
+        let(:params) { generate_params(factory, name) }
 
         it { action }
 
@@ -33,7 +33,7 @@ shared_examples 'controllers/update' do |model, entity, resource, factories|
 
     context 'invalid' do
       factories[:invalid].each do |factory|
-        let(:params) { { name => FactoryGirl.attributes_for(factory) } }
+        let(:params) { generate_params(factory, name) }
         
         it { action }
 
