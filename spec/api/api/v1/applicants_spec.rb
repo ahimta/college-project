@@ -23,26 +23,26 @@ describe API::V1::Applicants do
     after { expect(Applicant.count).to eq(count) }
 
     context 'exist' do
-      after { expect(record.reload.accepted).to be_true }
+      after { expect(record.reload.accepted).to be(true) }
 
       context 'rejected' do
         let(:record) { rejected_applicant }
 
-        before { expect(record.reload.accepted).to be_false }
+        before { expect(record.reload.accepted).to be(false) }
 
         it { action }
       end
       context 'accepted' do
         let(:record) { accepted_applicant }
 
-        before { expect(record.reload.accepted).to be_true }
+        before { expect(record.reload.accepted).to be(true) }
 
         it { action }
       end
       context 'pending' do
         let(:record) { pending_applicant }
 
-        before { expect(record.reload.accepted).to be_nil }
+        before { expect(record.reload.accepted).to be(nil) }
 
         it { action }
       end
