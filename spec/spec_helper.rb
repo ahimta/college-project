@@ -16,6 +16,10 @@ module MyHelpers
   def json_response
     @json_response ||= JSON.parse response.body
   end
+
+  def serialized_record(entity, record)
+    JSON.parse entity.represent(record).to_json
+  end
 end
 
 RSpec.configure do |config|
