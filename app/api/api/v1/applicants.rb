@@ -68,12 +68,12 @@ class API::V1::Applicants < Grape::API
       end
 
       desc 'Accept an applicant.'
-      post '/accept' do
+      put 'accept' do
         @applicant.update! accepted: true unless @applicant.accepted?
       end
 
       desc 'Reject an applicant.'
-      post '/reject' do
+      put '/reject' do
         accepted = @applicant.accepted
 
         @applicant.update! accepted: false if accepted.nil? or accepted

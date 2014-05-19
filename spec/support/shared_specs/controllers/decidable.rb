@@ -12,7 +12,7 @@ shared_examples 'controllers/decidable' do |model, entity, resource|
       let!(:pending_record) { FactoryGirl.create(name) }
       let(:count) { 3 }
 
-      let(:action) { post "#{url}/#{record.id}/#{decision}" }
+      let(:action) { put "#{url}/#{record.id}/#{decision}" }
 
       before { expect(model.count).to eq(count) }
       after { expect(model.count).to eq(count) }
@@ -43,7 +43,7 @@ shared_examples 'controllers/decidable' do |model, entity, resource|
         end
       end
       context 'does not exist' do
-        it { post "#{url}/99/#{decision}" }
+        it { put "#{url}/99/#{decision}" }
 
         after { expect(response.status).to eq(404) }
       end
