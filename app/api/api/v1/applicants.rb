@@ -43,9 +43,13 @@ class API::V1::Applicants < Grape::API
     end
 
     route_param :id, type: Integer, desc: 'Applicant id.' do
+      before do
+        @applicant = Applicant.find(params[:id])
+      end
+
       desc 'Get an applicant by id.'
       get do
-        present :applicant, Applicant.find(params[:id])
+        present @applicant, with: API::V1::Entities::Applicant
       end
 
       desc 'Update an applicant.'
@@ -53,15 +57,14 @@ class API::V1::Applicants < Grape::API
         use :applicant
       end
       put do
-        applicant = Applicant.find(params[:id])
-        applicant.update! safe_params
+        @applicant.update! safe_params
 
-        present :applicant, applicant
+        present @applicant, with: API::V1::Entities::Applicant
       end
 
       desc 'Delete an applicant.'
       delete do
-        present :applicant, Applicant.find(params[:id]).destroy
+        present @applicant.destroy, with: API::V1::Entities::Applicant
       end
     end
   end
