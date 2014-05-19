@@ -66,6 +66,11 @@ class API::V1::Applicants < Grape::API
       delete do
         present @applicant.destroy, with: API::V1::Entities::Applicant
       end
+
+      desc 'Accept an applicant'
+      post '/accept' do
+        @applicant.update! accepted: true unless @applicant.accepted?
+      end
     end
   end
 end
