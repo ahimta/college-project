@@ -10,7 +10,7 @@ describe API::V1::Applicants do
   let(:expected_record) { serialized_record(entity, model.first) }
   let(:entity) { API::V1::Entities::Applicant }
 
-  describe 'GET /api/v1/applicants' do
+  describe "GET #{url}" do
     let(:action) { get url }
     
     before { expect(model.count).to be_zero }
@@ -38,7 +38,7 @@ describe API::V1::Applicants do
     end
   end
 
-  describe 'GET /api/v1/applicants/:id' do
+  describe "GET #{url}/:id" do
     context 'exists' do
       let!(:record) { FactoryGirl.create :applicant }
 
@@ -54,7 +54,7 @@ describe API::V1::Applicants do
     end
   end
 
-  describe 'POST /api/v1/applicants' do
+  describe "POST #{url}" do
     let(:action) { post url, params }
 
     before { expect(model.count).to be_zero }
@@ -81,7 +81,7 @@ describe API::V1::Applicants do
     end
   end
 
-  describe 'PUT /api/v1/applicants/:id' do
+  describe "PUT #{url}/:id" do
     let(:action) { put "#{url}/#{record.id}", params }
     let!(:record) { FactoryGirl.create name }
     let(:count) { 1 }
@@ -115,7 +115,7 @@ describe API::V1::Applicants do
     end
   end
 
-  describe 'DELETE /api/v1/applicants/:id' do
+  describe "DELETE #{url}/:id" do
     let!(:record) { FactoryGirl.create name }
     let(:count) { 1 }
 
