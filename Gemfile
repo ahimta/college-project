@@ -8,10 +8,12 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'rails-i18n', '~> 4.0.2'
 gem 'kaminari', '~> 0.15.1'
+
 gem 'grape', '~> 0.7.0'
+gem 'grape-entity', '~> 0.4.2'
+
 gem 'factory_girl_rails', '~> 4.4.1'
 gem 'rack-cors', require: 'rack/cors'
-# gem 'active_model_serializers', '~> 0.8.1'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.14.2'
