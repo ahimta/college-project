@@ -2,7 +2,12 @@ require 'spec_helper'
 
 describe API::V1::Applicants do
 
-  let(:expected_record) { {'applicant' => JSON.parse(Applicant.first.to_json)} }
+  def f(entity, record)
+    JSON.parse entity.represent(record).to_json
+  end
+
+  let(:entity) { API::V1::Entities::Applicant }
+  let(:expected_record) { f(entity, Applicant.first) }
 
   describe 'GET /api/v1/applicants' do
     let(:action) { get '/api/v1/applicants' }
@@ -12,13 +17,14 @@ describe API::V1::Applicants do
     context 'empty' do
       it { action }
 
-      after { expect(json_response).to eq({'applicants' => []}) }
+      after { expect(json_response['applicants'].length).to be_zero }
+      after { expect(json_response).to eq(f(entity, Applicant.all)) }
       after { expect(response.status).to eq(200) }
       after { expect(Applicant.count).to be_zero }
     end
 
     context 'not empty' do
-      let(:expected_records) { {'applicants' => JSON.parse(Applicant.order('id').to_json)} }
+      let(:expected_records) { f(entity, Applicant.order('id')) }
       let!(:records) { FactoryGirl.create_list :applicant, count }
       let(:count) { 3 }
 
@@ -117,7 +123,7 @@ describe API::V1::Applicants do
     context 'exist' do
       it { delete "/api/v1/applicants/#{record.id}" }
 
-      after { expect(json_response).to eq({'applicant' => JSON.parse(record.to_json)}) }
+      after { p response.body; expect(json_response).to eq(f(entity, record)) }
       after { expect(Applicant.count).to be_zero }
     end
 
