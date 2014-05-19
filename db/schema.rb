@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20140514054259) do
     t.string   "address",        null: false
     t.string   "specialization", null: false
     t.string   "degree",         null: false
+    t.boolean  "accepted"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -31,7 +31,7 @@ class API::V1::Applicants < Grape::API
 
     desc 'Return all applicants.'
     get do
-      present :applicants, Applicant.all
+      present Applicant.all, with: API::V1::Entities::Applicant
     end
 
     desc 'Create an applicant.'
@@ -39,7 +39,7 @@ class API::V1::Applicants < Grape::API
       use :applicant
     end
     post do
-      present :applicant, Applicant.create!(safe_params)
+      present Applicant.create!(safe_params), with: API::V1::Entities::Applicant
     end
 
     route_param :id, type: Integer, desc: 'Applicant id.' do

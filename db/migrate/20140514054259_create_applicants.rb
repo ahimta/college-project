@@ -8,6 +8,8 @@ class CreateApplicants < ActiveRecord::Migration
       t.string :specialization, null: false
       t.string :degree, null: false
 
+      t.boolean :accepted
+
       t.timestamps
     end
   end
