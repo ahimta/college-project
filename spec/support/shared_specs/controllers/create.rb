@@ -11,6 +11,8 @@ shared_examples 'controllers/create' do |model, entity, resource, factories|
     before { expect(model.count).to be_zero }
 
     context 'valid' do
+      let(:expected_record) { serialized_record(entity, model.first) }
+      
       factories[:valid].each do |factory|
         let(:params) { generate_params(factory, name) }
 

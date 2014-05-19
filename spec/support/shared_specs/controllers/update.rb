@@ -20,6 +20,8 @@ shared_examples 'controllers/update' do |model, entity, resource, factories|
     end
 
     context 'valid' do
+      let(:expected_record) { serialized_record(entity, model.first) }
+      
       factories[:valid].each do |factory|
         let(:params) { generate_params(factory, name) }
 

@@ -2,14 +2,6 @@ require 'spec_helper'
 
 describe API::V1::Applicants do
 
-  resource = 'applicants'
-  model = Applicant
-  name = resource[0..-2]
-  url = "/api/v1/#{resource}"
-
-  let(:expected_record) { serialized_record(entity, model.first) }
-  let(:entity) { API::V1::Entities::Applicant }
-
   args = [Applicant, API::V1::Entities::Applicant, 'applicants']
   factories = {valid: [:applicant], invalid: [:invalid_applicant]}
 
