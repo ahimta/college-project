@@ -19,11 +19,12 @@ describe API::V1::Applicants do
 
     let(:action) { post "/api/v1/applicants/#{record.id}/accept" }
 
-    after { expect(record.reload.accepted).to be_true }
     before { expect(Applicant.count).to eq(count) }
     after { expect(Applicant.count).to eq(count) }
 
     context 'exist' do
+      after { expect(record.reload.accepted).to be_true }
+
       context 'rejected' do
         let(:record) { rejected_applicant }
 
@@ -47,6 +48,9 @@ describe API::V1::Applicants do
       end
     end
     context 'does not exist' do
+      it { post '/api/v1/applicants/99/accept' }
+
+      after { expect(response.status).to eq(404) }
     end
   end
 end
