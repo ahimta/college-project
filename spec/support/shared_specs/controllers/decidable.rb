@@ -10,11 +10,17 @@ shared_examples 'controllers/decidable' do |model, entity, resource|
       let!(:rejected_record) { FactoryGirl.create(name, accepted: false) }
       let!(:accepted_record) { FactoryGirl.create(name, accepted: true) }
       let!(:pending_record) { FactoryGirl.create(name) }
+      
+      let(:expected_records) { serialized_record(entity, model.order('id desc').reload) }
+      let(:actual_records) { serialized_record(entity, model.all.reload) }
       let(:count) { 3 }
 
       let(:action) { put "#{url}/#{record.id}/#{decision}" }
 
+      before { expect(actual_records).to eq(expected_records) }
       before { expect(model.count).to eq(count) }
+
+      after { expect(actual_records).to eq(expected_records) }
       after { expect(model.count).to eq(count) }
 
       context 'exist' do

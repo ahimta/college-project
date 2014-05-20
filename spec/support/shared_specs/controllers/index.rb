@@ -20,9 +20,10 @@ shared_examples 'controllers/index' do |model, entity, resource|
     end
 
     context 'not empty' do
-      let(:expected_records) { serialized_record(entity, model.order('id')) }
-      let!(:records) { FactoryGirl.create_list name, count }
-      let(:count) { 3 }
+      let(:expected_records) { serialized_record(entity, model.order('id desc')) }
+      let!(:__) { FactoryGirl.create_list name, 3 }
+      let!(:_) { FactoryGirl.create name }
+      let(:count) { 4 }
 
       it { action }
 
