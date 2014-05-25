@@ -68,7 +68,7 @@ GEM
       railties (>= 3.0.0)
     fastercsv (1.5.5)
     ffi (1.9.3)
-    formatador (0.2.4)
+    formatador (0.2.5)
     grape (0.7.0)
       activesupport
       builder
@@ -116,7 +116,7 @@ GEM
     method_source (0.8.2)
     mime-types (1.25.1)
     minitest (5.3.4)
-    multi_json (1.10.0)
+    multi_json (1.10.1)
     multi_xml (0.5.5)
     newrelic_rpm (3.8.1.221)
     pg (0.17.1)
