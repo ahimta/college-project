@@ -5,5 +5,18 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
 Applicant.destroy_all
-FactoryGirl.create_list :applicant, 5
+
+applicants = [
+  {first_name: 'الخليل', last_name: 'أحمد الفراهيدي', phone: '0512345678', address: 'عمان',
+    specialization: 'علم النحو و البلاغة', degree: 'عالم مسلم'},
+  {first_name: 'ابن', last_name: 'خلدون', phone: '0521345678', address: 'تونس',
+    specialization: 'علم الاجتماع', degree: 'عالم مسلم'},
+  {first_name: 'ابن', last_name: 'سينا', phone: '0521345678', address: 'بخارى',
+    specialization: 'رياضيات', degree: 'عالم مسلم'},
+]
+
+applicants.each do |applicant|
+  Applicant.create! applicant
+end
