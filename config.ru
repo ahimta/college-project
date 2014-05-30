@@ -4,7 +4,7 @@ require ::File.expand_path('../config/environment',  __FILE__)
 
 
 # You need to manually start the agent
-NewRelic::Agent.manual_start
+# NewRelic::Agent.manual_start
 
 
 run Rails.application
