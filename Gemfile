@@ -7,7 +7,8 @@ gem 'rails', '~> 4.1.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'rails-i18n', '~> 4.0.2'
-gem 'kaminari', '~> 0.15.1'
+
+gem 'bcrypt', '~> 3.1.0'
 
 gem 'grape', '~> 0.7.0'
 gem 'grape-entity', '~> 0.4.2'
