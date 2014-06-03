@@ -1,6 +1,7 @@
+require_relative 'validators/present'
+
 class API::V1::Applicants < Grape::API
   include API::V1::Defaults
-  include API::V1::Validators
 
 
   resource :applicants do
