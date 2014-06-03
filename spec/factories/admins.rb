@@ -2,10 +2,8 @@
 
 FactoryGirl.define do
   factory :admin do
-    full_name "MyString"
-    username "MyString"
-    password_digest "MyString"
-    deletable false
-    is_active false
+    sequence(:full_name) { |n| "full_name#{n}" }
+    sequence(:username) { |n| "username#{n}" }
+    sequence(:password) { |n| "password#{n}" }
   end
 end
