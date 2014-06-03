@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140514054259) do
+ActiveRecord::Schema.define(version: 20140603153556) do
+
+  create_table "admins", force: true do |t|
+    t.string   "full_name",                       null: false
+    t.string   "username",                        null: false
+    t.string   "password_digest",                 null: false
+    t.boolean  "deletable",       default: false
+    t.boolean  "is_active",       default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "applicants", force: true do |t|
     t.string   "first_name",     null: false
