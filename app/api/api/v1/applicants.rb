@@ -1,14 +1,6 @@
-class API::V1::Present < Grape::Validations::Validator
-  def validate_param!(attr_name, params)
-    unless params[attr_name].present?
-      raise(Grape::Exceptions::Validation, param: @scope.full_name(attr_name),
-        message: "can't be blank")
-    end
-  end
-end
-
 class API::V1::Applicants < Grape::API
   include API::V1::Defaults
+  include API::V1::Validators
 
 
   resource :applicants do
