@@ -1,3 +1,4 @@
+require_relative 'validators/confirmation'
 require_relative 'validators/present'
 
 module API::V1
@@ -8,9 +9,10 @@ module API::V1
       helpers do
         params :admin do
           requires :admin, type: Hash do
-            requires :full_name, type: String
-            requires :username, type: String
-            requires :password, type: String
+            requires :full_name, type: String, present: true
+            requires :username, type: String, present: true
+            requires :password, type: String, present: true
+            optional :password_confirmation, type: String, confirmation: 'password'
             optional :is_active, type: Boolean
           end
         end
@@ -25,7 +27,13 @@ module API::V1
       end
 
       params do
-        use :admin
+        requires :admin, type: Hash do
+          requires :full_name, type: String, present: true
+          requires :username, type: String, present: true
+          requires :password, type: String, present: true
+          optional :password_confirmation, type: String, confirmation: 'password'
+          optional :is_active, type: Boolean
+        end
       end
       post do
         present Admin.create!(safe_params), with: Entities::Admin
@@ -43,7 +51,13 @@ module API::V1
 
         desc 'Update an admin by id'
         params do
-          use :admin
+          requires :admin, type: Hash do
+            requires :full_name, type: String, present: true
+            requires :username, type: String, present: true
+            optional :password, type: String
+            optional :password_confirmation, type: String, confirmation: 'password'
+            optional :is_active, type: Boolean
+          end
         end
         put do
           @admin.update! safe_params
