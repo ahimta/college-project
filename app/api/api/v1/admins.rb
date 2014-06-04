@@ -30,7 +30,7 @@ module API::V1
 
         if admin
           session[:user_id] = admin.id
-          session[:user_type] = 'admin'
+          session[:user_type] = Loginable::Admin
         else
           error!('401', 401)
         end
