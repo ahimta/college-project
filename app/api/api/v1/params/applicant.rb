@@ -1,3 +1,5 @@
+require_relative '../validators/present'
+
 module API::V1::Params::Applicant
   extend Grape::API::Helpers
 

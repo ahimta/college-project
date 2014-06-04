@@ -1,11 +1,14 @@
 module Loginable
   extend ActiveSupport::Concern
 
-  Admin = 'admin'
+  AdminRole = 'admin'
 
+  # Pre-assumptions:
+  #   - session[:user_type] is not nil
+  #   - session[:user_id] is not nil
   def self.current_user(session)
     case session[:user_type]
-    when 'admin' then Admin.find session[:user_id]
+    when AdminRole then Admin.find session[:user_id]
     else raise ArgumentError
     end
   end

@@ -1,5 +1,9 @@
 module API::V1::Helpers::Shared
 
+  def authenticate!
+    error!('Unauthorized Access', 401) unless current_user
+  end
+
   def current_user
     @current_user ||= Loginable.current_user(session) if session[:user_id] and session[:user_type]
   end

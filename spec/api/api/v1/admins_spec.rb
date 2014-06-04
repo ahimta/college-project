@@ -23,7 +23,7 @@ describe API::V1::Admins do
     valid: (create_factories[:valid] + diff_factories)
   }
 
-  it_behaves_like 'controllers/login', Admin, 'admins', Loginable::Admin
+  it_behaves_like 'controllers/login', Admin, 'admins', Loginable::AdminRole
 
   context 'logged in' do
     let!(:admin) { FactoryGirl.create :admin }
@@ -39,6 +39,25 @@ describe API::V1::Admins do
   end
 
   context 'not logged in' do
-    after { expect(response.status).to eq(401) }
+    context 'forbidden' do
+      after { expect(response.status).to eq(401) }
+
+      context 'create' do
+        it { post '/api/v1/admins' }
+      end
+      context 'index' do
+        it { get '/api/v1/admins' }
+      end
+      context 'show' do
+        it { get '/api/v1/admins/99' }
+
+      end
+      context 'update' do
+        it { put '/api/v1/admins/99' }
+      end
+      context 'destroy' do
+        it { delete '/api/v1/admins/99' }
+      end
+    end
   end
 end
