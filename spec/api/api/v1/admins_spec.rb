@@ -21,7 +21,7 @@ describe API::V1::Admins do
     valid: (create_factories[:valid] + [:admin_without_password])
   }
 
-  # it_behaves_like 'controllers/login', Admin, 'admins'
+  it_behaves_like 'controllers/login', Admin, 'admins'
 
   context 'logged in' do
     it_behaves_like 'controllers/index', *args
