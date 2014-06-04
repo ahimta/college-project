@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 shared_examples 'controllers/update' do |model, entity, resource, factories|
-  
+
   name = resource[0..-2]
   url = "/api/v1/#{resource}"
 
   describe "PUT #{url}/:id" do
     let(:action) { put "#{url}/#{record.id}", params }
     let!(:record) { FactoryGirl.create name }
-    let(:count) { 1 }
+    let!(:count) { model.count }
 
     before { expect(model.count).to eq(count) }
     after { expect(model.count).to eq(count) }
@@ -21,7 +21,7 @@ shared_examples 'controllers/update' do |model, entity, resource, factories|
 
     context 'valid' do
       let(:expected_record) { serialized_record(entity, model.first) }
-      
+
       factories[:valid].each do |factory|
         let(:params) { generate_params(factory, name) }
 
@@ -36,7 +36,7 @@ shared_examples 'controllers/update' do |model, entity, resource, factories|
     context 'invalid' do
       factories[:invalid].each do |factory|
         let(:params) { generate_params(factory, name) }
-        
+
         it { action }
 
         after { expect(model.first.attributes.to_s).to eq(record.attributes.to_s) }

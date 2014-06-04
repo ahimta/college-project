@@ -8,29 +8,32 @@ shared_examples 'controllers/index' do |model, entity, resource|
   describe "GET #{url}" do
     let(:action) { get url }
 
-    before { expect(model.count).to be_zero }
-
     context 'empty' do
+      let!(:count) { model.count }
+
+      before { expect(model.count).to eq(count) }
+
       it { action }
 
       after { expect(json_response).to eq(serialized_record(entity, model.all)) }
-      after { expect(json_response[resource].length).to be_zero }
+      after { expect(json_response[resource].length).to eq(count) }
       after { expect(response.status).to eq(200) }
-      after { expect(model.count).to be_zero }
+      after { expect(model.count).to eq(count) }
     end
 
     context 'not empty' do
       let(:expected_records) { serialized_record(entity, model.order('id desc')) }
-      let!(:__) { FactoryGirl.create_list name, 3 }
+      let!(:_) { FactoryGirl.create_list name, 3 }
       let!(:_) { FactoryGirl.create name }
-      let(:count) { 4 }
+      let!(:count) { model.count }
+
+      before { expect(model.count).to eq(count) }
 
       it { action }
 
-      after { expect(json_response[resource].length).to eq(count) }
       after { expect(json_response).to eq(expected_records) }
-      after { expect(model.count).to eq(count) }
       after { expect(response.status).to eq(200) }
+      after { expect(model.count).to eq(count) }
     end
   end
 end

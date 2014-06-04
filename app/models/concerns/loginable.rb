@@ -3,6 +3,13 @@ module Loginable
 
   Admin = 'admin'
 
+  def self.current_user(session)
+    case session[:user_type]
+    when 'admin' then Admin.find session[:user_id]
+    else raise ArgumentError
+    end
+  end
+
   included do
     has_secure_password
 

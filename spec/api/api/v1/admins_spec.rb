@@ -26,6 +26,11 @@ describe API::V1::Admins do
   it_behaves_like 'controllers/login', Admin, 'admins', Loginable::Admin
 
   context 'logged in' do
+    let!(:admin) { FactoryGirl.create :admin }
+    let(:login) { {login: {username: admin.username, password: admin.password}} }
+
+    before { post '/api/v1/admins/login', login }
+
     it_behaves_like 'controllers/index', *args
     it_behaves_like 'controllers/show', *args
     it_behaves_like 'controllers/destroy', *args
