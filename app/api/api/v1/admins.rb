@@ -16,10 +16,6 @@ module API::V1
             optional :is_active, type: Boolean
           end
         end
-
-        def safe_params
-          @safe_params ||= declared(params, include_missing: false)
-        end
       end
 
       get do
@@ -40,13 +36,13 @@ module API::V1
       end
 
       params do
-        requires :user, type: Hash do
+        requires :login, type: Hash do
           requires :username, type: String, present: true
           requires :password, type: String, present: true
         end
       end
       post :login do
-        user = declared(params, include_missing: false)[:user]
+        user = safe_params[:login]
         admin = Admin.login(user[:username], user[:password])
 
         if admin

@@ -8,7 +8,7 @@ module API::V1::Defaults
 
     helpers do
       def safe_params
-        @safe_params = declared(params, incude_missing: false)
+        @safe_params ||= declared(params, include_missing: false)
       end
 
       def session

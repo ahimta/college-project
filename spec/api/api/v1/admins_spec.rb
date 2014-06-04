@@ -31,7 +31,7 @@ describe API::V1::Admins do
 
     context 'valid' do
       let(:params) {
-        {user: {username: admin.username, password: admin.password} }
+        {login: {username: admin.username, password: admin.password} }
       }
 
       it { action! }
@@ -46,7 +46,7 @@ describe API::V1::Admins do
 
       context 'wrong password' do
         let(:params) {
-          {user: {username: admin.username, password: admin.password.swapcase} }
+          {login: {username: admin.username, password: admin.password.swapcase} }
         }
 
         it { action! }
