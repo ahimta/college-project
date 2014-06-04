@@ -1,4 +1,4 @@
-module API::V1::SharedParams
+module API::V1::Params::Shared
   extend Grape::API::Helpers
 
   params :login do

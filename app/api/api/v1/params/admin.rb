@@ -16,4 +16,25 @@ module API::V1::Params::Admin
       optional :is_active, type: Boolean
     end
   end
+
+
+  params :admin_create do
+    requires :admin, type: Hash do
+      requires :full_name, type: String, present: true
+      requires :username, type: String, present: true
+      requires :password, type: String, present: true
+      optional :password_confirmation, type: String, confirmation: 'password'
+      optional :is_active
+    end
+  end
+
+  params :admin_update do
+    requires :admin, type: Hash do
+      requires :full_name, type: String, present: true
+      requires :username, type: String, present: true
+      optional :password, type: String
+      optional :password_confirmation, type: String, confirmation: 'password'
+      optional :is_active
+    end
+  end
 end

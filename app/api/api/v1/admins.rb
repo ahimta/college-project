@@ -6,20 +6,15 @@ module API::V1
     include Defaults
 
     resource :admins do
-      helpers SharedParams
+      helpers Params::Shared
+      helpers Params::Admin
 
       get do
         present Admin.all, with: Entities::Admin
       end
 
       params do
-        requires :admin, type: Hash do
-          requires :full_name, type: String, present: true
-          requires :username, type: String, present: true
-          requires :password, type: String, present: true
-          optional :password_confirmation, type: String, confirmation: 'password'
-          optional :is_active, type: Boolean
-        end
+        use :admin_create
       end
       post do
         present Admin.create!(safe_params[:admin]), with: Entities::Admin
@@ -52,13 +47,7 @@ module API::V1
 
         desc 'Update an admin by id'
         params do
-          requires :admin, type: Hash do
-            requires :full_name, type: String, present: true
-            requires :username, type: String, present: true
-            optional :password, type: String
-            optional :password_confirmation, type: String, confirmation: 'password'
-            optional :is_active, type: Boolean
-          end
+          use :admin_update
         end
         put do
           @admin.update! safe_params[:admin]
