@@ -6,7 +6,7 @@ module Loginable
   included do
     has_secure_password
 
-    validates :username, presence: true
+    validates :full_name, :username, presence: true
 
     def self.login(username, password)
       self.where(username: username).first.
