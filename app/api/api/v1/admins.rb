@@ -39,6 +39,24 @@ module API::V1
         present Admin.create!(safe_params), with: Entities::Admin
       end
 
+      params do
+        requires :user, type: Hash do
+          requires :username, type: String, present: true
+          requires :password, type: String, present: true
+        end
+      end
+      post :login do
+        user = declared(params, include_missing: false)[:user]
+        admin = Admin.login(user[:username], user[:password])
+
+        if admin
+          session[:user_id] = admin.id
+          session[:user_type] = 'admin'
+        else
+          error!('401', 401)
+        end
+      end
+
       route_param :id, type: Integer, desc: 'admin id' do
         before do
           @admin = Admin.find params[:id]

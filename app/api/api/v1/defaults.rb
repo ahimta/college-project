@@ -6,6 +6,13 @@ module API::V1::Defaults
     default_format :json
     format :json
 
+    helpers do
+
+      def session
+        @session ||= env[Rack::Session::Abstract::ENV_SESSION_KEY]
+      end
+    end
+
     rescue_from ActiveRecord::RecordNotFound do |e|
       error_response(message: e.message, status: 404)
     end
