@@ -7,6 +7,9 @@ module API::V1::Defaults
     format :json
 
     helpers do
+      def safe_params
+        @safe_params = declared(params, incude_missing: false)
+      end
 
       def session
         @session ||= env[Rack::Session::Abstract::ENV_SESSION_KEY]

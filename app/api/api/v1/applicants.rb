@@ -16,10 +16,6 @@ class API::V1::Applicants < Grape::API
           requires :degree, type: String, present: true, desc: 'Degree.'
         end
       end
-
-      def safe_params
-        @safe_params ||= declared(params, include_missing: false)[:applicant]
-      end
     end
 
     desc 'Return all applicants.'
@@ -32,7 +28,7 @@ class API::V1::Applicants < Grape::API
       use :applicant
     end
     post do
-      present Applicant.create!(safe_params), with: API::V1::Entities::Applicant
+      present Applicant.create!(safe_params[:applicant]), with: API::V1::Entities::Applicant
     end
 
     route_param :id, type: Integer, desc: 'Applicant id.' do
@@ -50,8 +46,7 @@ class API::V1::Applicants < Grape::API
         use :applicant
       end
       put do
-        @applicant.update! safe_params
-
+        @applicant.update!(safe_params[:applicant])
         present @applicant, with: API::V1::Entities::Applicant
       end
 

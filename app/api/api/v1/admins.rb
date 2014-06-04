@@ -18,7 +18,7 @@ module API::V1
         end
 
         def safe_params
-          @safe_params ||= declared(params, include_missing: false)[:admin]
+          @safe_params ||= declared(params, include_missing: false)
         end
       end
 
@@ -36,7 +36,7 @@ module API::V1
         end
       end
       post do
-        present Admin.create!(safe_params), with: Entities::Admin
+        present Admin.create!(safe_params[:admin]), with: Entities::Admin
       end
 
       params do
@@ -78,7 +78,7 @@ module API::V1
           end
         end
         put do
-          @admin.update! safe_params
+          @admin.update! safe_params[:admin]
           present @admin, with: Entities::Admin
         end
 
