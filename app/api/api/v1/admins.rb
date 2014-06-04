@@ -7,17 +7,6 @@ module API::V1
 
     resource :admins do
       helpers SharedParams
-      helpers do
-        params :admin do
-          requires :admin, type: Hash do
-            requires :full_name, type: String, present: true
-            requires :username, type: String, present: true
-            requires :password, type: String, present: true
-            optional :password_confirmation, type: String, confirmation: 'password'
-            optional :is_active, type: Boolean
-          end
-        end
-      end
 
       get do
         present Admin.all, with: Entities::Admin
