@@ -6,8 +6,9 @@ module API::V1
     include Defaults
 
     resource :admins do
-      helpers Params::Shared
-      helpers Params::Admin
+      helpers API::V1::Helpers::Shared
+      helpers API::V1::Params::Shared
+      helpers API::V1::Params::Admin
 
       get do
         present Admin.all, with: Entities::Admin

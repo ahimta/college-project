@@ -1,5 +1,4 @@
-module API::V1::Helpers
-  extend Grape::API::Helpers
+module API::V1::Helpers::Shared
 
   def safe_params
     @safe_params ||= declared(params, include_missing: false)

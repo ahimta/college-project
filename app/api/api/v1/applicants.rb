@@ -4,9 +4,9 @@ module API::V1
   class Applicants < Grape::API
     include Defaults
 
-
     resource :applicants do
-      helpers Params::Applicant
+      helpers API::V1::Params::Applicant
+      helpers API::V1::Helpers::Shared
 
       desc 'Return all applicants.'
       get do
