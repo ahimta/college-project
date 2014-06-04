@@ -21,23 +21,28 @@ describe API::V1::Admins do
     valid: (create_factories[:valid] + [:admin_without_password])
   }
 
-  describe 'POST /api/v1/admins/login' do
-    let(:action!) { post '/api/v1/admins/login', params }
-    let!(:admin) { FactoryGirl.create :admin }
+  resource = 'admins'
+  url = "/api/v1/#{resource}/login"
+  name = resource[0...-1]
+  model = Admin
+
+  describe "POST #{url}" do
+    let(:action!) { post url, params }
+    let!(:user) { FactoryGirl.create name }
     let(:count)  { 1 }
 
-    before { expect(Admin.count).to eq(count) }
-    after { expect(Admin.count).to eq(count) }
+    before { expect(model.count).to eq(count) }
+    after { expect(model.count).to eq(count) }
 
     context 'valid' do
       let(:params) {
-        {login: {username: admin.username, password: admin.password} }
+        {login: {username: user.username, password: user.password} }
       }
 
       it { action! }
 
       after { expect(session[:user_type]).to eq('admin') }
-      after { expect(session[:user_id]).to eq(admin.id) }
+      after { expect(session[:user_id]).to eq(user.id) }
       after { expect(response.status).to eq(201) }
     end
     context 'invalid' do
@@ -46,7 +51,7 @@ describe API::V1::Admins do
 
       context 'wrong password' do
         let(:params) {
-          {login: {username: admin.username, password: admin.password.swapcase} }
+          {login: {username: user.username, password: user.password.swapcase} }
         }
 
         it { action! }
