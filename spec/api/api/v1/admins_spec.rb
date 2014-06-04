@@ -23,7 +23,7 @@ describe API::V1::Admins do
     valid: (create_factories[:valid] + diff_factories)
   }
 
-  it_behaves_like 'controllers/login', Admin, 'admins'
+  it_behaves_like 'controllers/login', Admin, 'admins', Loginable::Admin
 
   context 'logged in' do
     it_behaves_like 'controllers/index', *args

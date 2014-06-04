@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-shared_examples 'controllers/login' do |model, resource|
+shared_examples 'controllers/login' do |model, resource, user_type|
   url = "/api/v1/#{resource}/login"
   name = resource[0...-1]
 
@@ -19,7 +19,7 @@ shared_examples 'controllers/login' do |model, resource|
 
       it { action! }
 
-      after { expect(session[:user_type]).to eq('admin') }
+      after { expect(session[:user_type]).to eq(user_type) }
       after { expect(session[:user_id]).to eq(user.id) }
       after { expect(response.status).to eq(201) }
     end
