@@ -1,13 +1,13 @@
 require 'spec_helper'
 
 shared_examples 'controllers/index' do |model, entity, resource|
-  
+
   name = resource[0..-2]
   url = "/api/v1/#{resource}"
 
   describe "GET #{url}" do
     let(:action) { get url }
-    
+
     before { expect(model.count).to be_zero }
 
     context 'empty' do
