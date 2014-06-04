@@ -16,9 +16,11 @@ describe API::V1::Admins do
     ]
   }
 
+  diff_factories = [:admin_without_password]
+
   update_factories = {
-    invalid: (create_factories[:invalid] - [:admin_without_password]),
-    valid: (create_factories[:valid] + [:admin_without_password])
+    invalid: (create_factories[:invalid] - diff_factories),
+    valid: (create_factories[:valid] + diff_factories)
   }
 
   it_behaves_like 'controllers/login', Admin, 'admins'
@@ -32,6 +34,6 @@ describe API::V1::Admins do
   end
 
   context 'not logged in' do
-
+    after { expect(response.status).to eq(401) }
   end
 end
