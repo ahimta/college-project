@@ -6,6 +6,7 @@ module API::V1
     include Defaults
 
     resource :admins do
+      helpers SharedParams
       helpers do
         params :admin do
           requires :admin, type: Hash do
@@ -36,10 +37,7 @@ module API::V1
       end
 
       params do
-        requires :login, type: Hash do
-          requires :username, type: String, present: true
-          requires :password, type: String, present: true
-        end
+        use :login
       end
       post :login do
         user = safe_params[:login]
