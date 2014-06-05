@@ -23,34 +23,6 @@ describe API::V1::Admins do
     valid: (create_factories[:valid] + diff_factories)
   }
 
-  describe "DELETE /api/v1/admins/logout" do
-    let!(:user) { FactoryGirl.create :admin }
-    let!(:count) { Admin.count }
-
-    let(:action!) { delete "/api/v1/admins/logout" }
-
-    before { expect(Admin.count).to eq(count) }
-    after { expect(Admin.count).to eq(count) }
-
-    context 'logged in' do
-      let(:login) { {login: {username: user.username, password: user.password}} }
-
-      before { post "/api/v1/admins/login", login }
-
-      it { action! }
-
-      after { expect(session[:user_type]).to be(nil) }
-      after { expect(session[:user_id]).to be(nil) }
-      after { expect(response.status).to eq(200) }
-    end
-
-    context 'not logged in' do
-      it { action! }
-
-      after { expect(response.status).to eq(401) }
-    end
-  end
-
   context 'logged in' do
     let!(:admin) { FactoryGirl.create :admin }
     let(:login) { {login: {username: admin.username, password: admin.password}} }
@@ -67,6 +39,7 @@ describe API::V1::Admins do
   context 'not logged in' do
     context 'allowed' do
       it_behaves_like 'controllers/login', Admin, 'admins', Loginable::AdminRole
+      it_behaves_like 'controllers/logout', Admin, 'admins'
     end
 
     context 'forbidden' do
