@@ -33,11 +33,18 @@ module API::V1
           present Admin.all, with: Entities::Admin
         end
 
+        desc 'Create an admin'
         params do
           use :admin_create
         end
         post do
           present Admin.create!(safe_params[:admin]), with: Entities::Admin
+        end
+
+        desc 'Log out an admin'
+        delete :logout do
+          session.delete :user_type
+          session.delete :user_id
         end
 
         route_param :id, type: Integer, desc: 'admin id' do
