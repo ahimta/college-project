@@ -23,6 +23,9 @@ ActiveRecord::Schema.define(version: 20140605143908) do
     t.datetime "updated_at"
   end
 
+  add_index "admin_accounts", ["username", "password_digest"], name: "index_admin_accounts_on_username_and_password_digest"
+  add_index "admin_accounts", ["username"], name: "index_admin_accounts_on_username", unique: true
+
   create_table "applicants", force: true do |t|
     t.string   "first_name",     null: false
     t.string   "last_name",      null: false
