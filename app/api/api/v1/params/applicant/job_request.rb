@@ -3,8 +3,8 @@ require_relative '../../validators/present'
 module API::V1::Params::Applicant::JobRequest
   extend Grape::API::Helpers
 
-  params :applicant do
-    requires :applicant, type: Hash do
+  params :applicant_job_request do
+    requires :applicant_job_request, type: Hash do
       requires :full_name, type: String, present: true, desc: 'Full name'
       requires :phone, type: String, present: true, desc: 'Phone.'
       requires :address, type: String, present: true, desc: 'Address.'

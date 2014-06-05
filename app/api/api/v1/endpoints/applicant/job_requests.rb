@@ -21,10 +21,10 @@ class API::V1::Endpoints::Applicant::JobRequests < Grape::API
 
     desc 'Create an applicant.'
     params do
-      use :applicant
+      use :applicant_job_request
     end
     post do
-      present model.create!(safe_params[:applicant]), with: entity
+      present model.create!(safe_params[:applicant_job_request]), with: entity
     end
 
     route_param :id, type: Integer, desc: 'Applicant id.' do
@@ -39,10 +39,10 @@ class API::V1::Endpoints::Applicant::JobRequests < Grape::API
 
       desc 'Update an applicant.'
       params do
-        use :applicant
+        use :applicant_job_request
       end
       put do
-        @record.update!(safe_params[:applicant])
+        @record.update!(safe_params[:applicant_job_request])
         present @record, with: entity
       end
 
