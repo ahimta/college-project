@@ -2,21 +2,21 @@ require 'spec_helper'
 
 describe API::V1::Endpoints::Admins do
 
-  args = [Admin, API::V1::Entities::Admin, 'admins']
+  args = [Admin::Account, API::V1::Entities::Admin, 'admins', :admin_account]
   create_factories = {
     valid: [
-      :admin_with_correct_password_confirmation,
-      :admin
+      :admin_account_with_correct_password_confirmation,
+      :admin_account
     ],
     invalid: [
-      :admin_with_incorrect_password_confirmation,
-      :admin_without_full_name,
-      :admin_without_username,
-      :admin_without_password
+      :admin_account_with_incorrect_password_confirmation,
+      :admin_account_without_full_name,
+      :admin_account_without_username,
+      :admin_account_without_password
     ]
   }
 
-  diff_factories = [:admin_without_password]
+  diff_factories = [:admin_account_without_password]
 
   update_factories = {
     invalid: (create_factories[:invalid] - diff_factories),
@@ -24,7 +24,7 @@ describe API::V1::Endpoints::Admins do
   }
 
   context 'logged in' do
-    let!(:admin) { FactoryGirl.create :admin }
+    let!(:admin) { FactoryGirl.create :admin_account }
     let(:login) { {login: {username: admin.username, password: admin.password}} }
 
     before { post '/api/v1/admins/login', login }
@@ -38,8 +38,8 @@ describe API::V1::Endpoints::Admins do
 
   context 'not logged in' do
     context 'allowed' do
-      it_behaves_like 'controllers/login', Admin, 'admins', Loginable::AdminRole
-      it_behaves_like 'controllers/logout', Admin, 'admins'
+      it_behaves_like 'controllers/login', Admin::Account, 'admins', :admin_account, Loginable::AdminRole
+      it_behaves_like 'controllers/logout', Admin::Account, 'admins', :admin_account
     end
 
     context 'forbidden' do

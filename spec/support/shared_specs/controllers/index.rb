@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-shared_examples 'controllers/index' do |model, entity, resource|
+shared_examples 'controllers/index' do |model, entity, resource, factory=''|
 
-  name = resource[0..-2]
+  name = factory
   url = "/api/v1/#{resource}"
 
   describe "GET #{url}" do

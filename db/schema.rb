@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140603153556) do
+ActiveRecord::Schema.define(version: 20140605143908) do
 
-  create_table "admins", force: true do |t|
-    t.string   "full_name",                       null: false
-    t.string   "username",                        null: false
-    t.string   "password_digest",                 null: false
-    t.boolean  "deletable",       default: false
+  create_table "admin_accounts", force: true do |t|
+    t.string   "full_name",                      null: false
+    t.string   "username",                       null: false
+    t.string   "password_digest",                null: false
     t.boolean  "is_active",       default: true
+    t.boolean  "deletable"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

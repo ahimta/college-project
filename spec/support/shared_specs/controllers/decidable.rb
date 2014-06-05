@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-shared_examples 'controllers/decidable' do |model, entity, resource|
-  
-  name = resource[0..-2]
+shared_examples 'controllers/decidable' do |model, entity, resource, factory=''|
+
+  name = factory
   url = "/api/v1/#{resource}"
 
   {'accept' => true, 'reject' => false}.each do |decision, accepted|
@@ -10,7 +10,7 @@ shared_examples 'controllers/decidable' do |model, entity, resource|
       let!(:rejected_record) { FactoryGirl.create(name, accepted: false) }
       let!(:accepted_record) { FactoryGirl.create(name, accepted: true) }
       let!(:pending_record) { FactoryGirl.create(name) }
-      
+
       let(:expected_records) { serialized_record(entity, model.order('id desc').reload) }
       let(:actual_records) { serialized_record(entity, model.all.reload) }
       let(:count) { 3 }

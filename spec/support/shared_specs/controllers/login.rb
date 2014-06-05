@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-shared_examples 'controllers/login' do |model, resource, user_type|
+shared_examples 'controllers/login' do |model, resource, factory, user_type|
   url = "/api/v1/#{resource}/login"
-  name = resource[0...-1]
+  name = factory
 
   describe "POST #{url}" do
     let(:action!) { post url, params }

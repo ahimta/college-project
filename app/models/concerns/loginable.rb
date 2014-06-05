@@ -8,7 +8,7 @@ module Loginable
   #   - session[:user_id] is not nil
   def self.current_user(session)
     case session[:user_type]
-    when AdminRole then Admin.find session[:user_id]
+    when AdminRole then Admin::Account.find session[:user_id]
     else raise ArgumentError
     end
   end

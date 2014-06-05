@@ -13,7 +13,7 @@ module API::V1
         end
         post :login do
           user = safe_params[:login]
-          admin = Admin.login(user[:username], user[:password])
+          admin = Admin::Account.login(user[:username], user[:password])
 
           if admin
             session[:user_id] = admin.id
@@ -30,7 +30,7 @@ module API::V1
         end
 
         get do
-          present Admin.all, with: Entities::Admin
+          present Admin::Account.all, with: Entities::Admin
         end
 
         desc 'Create an admin'
@@ -38,7 +38,7 @@ module API::V1
           use :admin_create
         end
         post do
-          present Admin.create!(safe_params[:admin]), with: Entities::Admin
+          present Admin::Account.create!(safe_params[:admin_account]), with: Entities::Admin
         end
 
         desc 'Log out an admin'
@@ -49,7 +49,7 @@ module API::V1
 
         route_param :id, type: Integer, desc: 'admin id' do
           before do
-            @admin = Admin.find(params[:id])
+            @admin = Admin::Account.find(params[:id])
           end
 
           desc 'Get an admin by id'
@@ -62,7 +62,7 @@ module API::V1
             use :admin_update
           end
           put do
-            @admin.update! safe_params[:admin]
+            @admin.update! safe_params[:admin_account]
             present @admin, with: Entities::Admin
           end
 

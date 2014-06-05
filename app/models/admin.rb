@@ -1,5 +1,5 @@
-class Admin < ActiveRecord::Base
-  include Loginable
-
-  default_scope { order('id desc') }
+module Admin
+  def self.table_name_prefix
+    'admin_'
+  end
 end

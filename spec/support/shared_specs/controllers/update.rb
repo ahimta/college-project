@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-shared_examples 'controllers/update' do |model, entity, resource, factories|
+shared_examples 'controllers/update' do |model, entity, resource, factory='', factories|
 
-  name = resource[0..-2]
+  name = factory
   url = "/api/v1/#{resource}"
 
   describe "PUT #{url}/:id" do
