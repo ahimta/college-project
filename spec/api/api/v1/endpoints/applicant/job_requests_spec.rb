@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe API::V1::Endpoints::Applicant::JobRequests do
 
-  args = [Applicant::JobRequest, API::V1::Entities::Applicant::JobRequest, 'applicant/job_requests', :applicant_job_request]
+  args = [Applicant::JobRequest, API::V1::Entities::Applicant::JobRequest, 'applicant/job_requests']
   factories = {valid: [:applicant_job_request], invalid: [:invalid_applicant_job_request]}
 
   it_behaves_like 'controllers/index', *args

@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-shared_examples 'controllers/show' do |model, entity, resource, factory=''|
+shared_examples 'controllers/show' do |model, entity, resource|
 
-  name = factory
+  name = resource.split('/').join('_')[0..-2]
   url = "/api/v1/#{resource}"
 
   describe "GET #{url}/:id" do

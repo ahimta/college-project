@@ -6,7 +6,7 @@ describe API::V1::Endpoints::Admin::Accounts do
   collection = 'admin_accounts'
   url = "/api/v1/#{resource}"
 
-  args = [Admin::Account, API::V1::Entities::Admin::Account, resource, :admin_account]
+  args = [Admin::Account, API::V1::Entities::Admin::Account, resource]
   create_factories = {
     valid: [
       :admin_account_with_correct_password_confirmation,
@@ -42,8 +42,8 @@ describe API::V1::Endpoints::Admin::Accounts do
 
   context 'not logged in' do
     context 'allowed' do
-      it_behaves_like 'controllers/login', Admin::Account, resource, :admin_account, Loginable::AdminRole
-      it_behaves_like 'controllers/logout', Admin::Account, resource, :admin_account
+      it_behaves_like 'controllers/login', Admin::Account, resource, Loginable::AdminRole
+      it_behaves_like 'controllers/logout', Admin::Account, resource
     end
 
     context 'forbidden' do

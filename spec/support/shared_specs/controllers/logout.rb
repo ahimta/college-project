@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 shared_examples 'controllers/logout' do |model, resource, factory|
-  name = factory
+  name = resource.split('/').join('_')[0..-2]
 
   describe "DELETE /api/v1/#{resource}/logout" do
     let!(:user) { FactoryGirl.create name }
