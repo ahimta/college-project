@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe API::V1::Endpoints::Admins do
+describe API::V1::Endpoints::Admin::Accounts do
 
   args = [Admin::Account, API::V1::Entities::Admin, 'admins', :admin_account]
   create_factories = {
