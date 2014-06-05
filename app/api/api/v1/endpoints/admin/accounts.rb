@@ -1,75 +1,82 @@
-module API::V1
-  class Endpoints::Admin::Accounts < Grape::API
-    include Defaults
+class API::V1::Endpoints::Admin::Accounts < Grape::API
+  include API::V1::Defaults
 
-    resource 'admin/accounts' do
-      helpers API::V1::Helpers::Shared
-      helpers API::V1::Params::Shared
-      helpers API::V1::Params::Admin
-
-      namespace do
-        params do
-          use :login
-        end
-        post :login do
-          user = safe_params[:login]
-          admin = Admin::Account.login(user[:username], user[:password])
-
-          if admin
-            session[:user_id] = admin.id
-            session[:user_type] = Loginable::AdminRole
-          else
-            error!('401', 401)
-          end
-        end
+  resource 'admin/accounts' do
+    helpers API::V1::Helpers::Shared
+    helpers API::V1::Params::Shared
+    helpers API::V1::Params::Admin
+    helpers do
+      def model
+        @model ||= ::Admin::Account
       end
 
-      namespace do
+      def entity
+        @entity ||= API::V1::Entities::Admin
+      end
+    end
+
+    namespace do
+      params do
+        use :login
+      end
+      post :login do
+        user = safe_params[:login]
+        admin = model.login(user[:username], user[:password])
+
+        if admin
+          session[:user_id] = admin.id
+          session[:user_type] = Loginable::AdminRole
+        else
+          error!('401', 401)
+        end
+      end
+    end
+
+    namespace do
+      before do
+        authenticate!
+      end
+
+      get do
+        present model.all, with: entity
+      end
+
+      desc 'Create an admin'
+      params do
+        use :admin_create
+      end
+      post do
+        present model.create!(safe_params[:admin_account]), with: entity
+      end
+
+      desc 'Log out an admin'
+      delete :logout do
+        session.delete :user_type
+        session.delete :user_id
+      end
+
+      route_param :id, type: Integer, desc: 'admin id' do
         before do
-          authenticate!
+          @admin = model.find(params[:id])
         end
 
+        desc 'Get an admin by id'
         get do
-          present Admin::Account.all, with: Entities::Admin
+          present @admin, with: entity
         end
 
-        desc 'Create an admin'
+        desc 'Update an admin by id'
         params do
-          use :admin_create
+          use :admin_update
         end
-        post do
-          present Admin::Account.create!(safe_params[:admin_account]), with: Entities::Admin
-        end
-
-        desc 'Log out an admin'
-        delete :logout do
-          session.delete :user_type
-          session.delete :user_id
+        put do
+          @admin.update! safe_params[:admin_account]
+          present @admin, with: entity
         end
 
-        route_param :id, type: Integer, desc: 'admin id' do
-          before do
-            @admin = Admin::Account.find(params[:id])
-          end
-
-          desc 'Get an admin by id'
-          get do
-            present @admin, with: Entities::Admin
-          end
-
-          desc 'Update an admin by id'
-          params do
-            use :admin_update
-          end
-          put do
-            @admin.update! safe_params[:admin_account]
-            present @admin, with: Entities::Admin
-          end
-
-          desc 'Delete an admin by id'
-          delete do
-            present @admin.destroy, with: Entities::Admin
-          end
+        desc 'Delete an admin by id'
+        delete do
+          present @admin.destroy, with: entity
         end
       end
     end
