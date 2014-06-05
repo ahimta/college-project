@@ -2,7 +2,7 @@ module API::V1
   class Endpoints::Admin::Accounts < Grape::API
     include Defaults
 
-    resource :admins do
+    resource 'admin/accounts' do
       helpers API::V1::Helpers::Shared
       helpers API::V1::Params::Shared
       helpers API::V1::Params::Admin

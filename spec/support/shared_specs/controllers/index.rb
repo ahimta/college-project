@@ -4,6 +4,7 @@ shared_examples 'controllers/index' do |model, entity, resource, factory=''|
 
   name = factory
   url = "/api/v1/#{resource}"
+  collection = resource.split('/').join('_')
 
   describe "GET #{url}" do
     let(:action) { get url }
@@ -16,7 +17,7 @@ shared_examples 'controllers/index' do |model, entity, resource, factory=''|
       it { action }
 
       after { expect(json_response).to eq(serialized_record(entity, model.all)) }
-      after { expect(json_response[resource].length).to eq(count) }
+      after { expect(json_response[collection].length).to eq(count) }
       after { expect(response.status).to eq(200) }
       after { expect(model.count).to eq(count) }
     end

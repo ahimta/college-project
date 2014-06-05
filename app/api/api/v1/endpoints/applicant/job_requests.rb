@@ -1,5 +1,5 @@
 module API::V1
-  class Endpoints::Applicants < Grape::API
+  class Endpoints::Applicant::JobRequests < Grape::API
     include Defaults
 
     resource :applicants do
@@ -8,7 +8,7 @@ module API::V1
 
       desc 'Return all applicants.'
       get do
-        present Applicant.all, with: Entities::Applicant
+        present ::Applicant.all, with: Entities::Applicant
       end
 
       desc 'Create an applicant.'
@@ -16,12 +16,12 @@ module API::V1
         use :applicant
       end
       post do
-        present Applicant.create!(safe_params[:applicant]), with: Entities::Applicant
+        present ::Applicant.create!(safe_params[:applicant]), with: Entities::Applicant
       end
 
       route_param :id, type: Integer, desc: 'Applicant id.' do
         before do
-          @applicant = Applicant.find(params[:id])
+          @applicant = ::Applicant.find(params[:id])
         end
 
         desc 'Get an applicant by id.'
