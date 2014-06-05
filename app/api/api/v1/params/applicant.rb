@@ -5,8 +5,7 @@ module API::V1::Params::Applicant
 
   params :applicant do
     requires :applicant, type: Hash do
-      requires :first_name, type: String, present: true, desc: 'First name.'
-      requires :last_name, type: String, present: true, desc: 'Last name'
+      requires :full_name, type: String, present: true, desc: 'Full name'
       requires :phone, type: String, present: true, desc: 'Phone.'
       requires :address, type: String, present: true, desc: 'Address.'
       requires :specialization, type: String, present: true, desc: 'Specialization.'

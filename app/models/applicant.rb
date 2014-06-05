@@ -1,5 +1,5 @@
-class Applicant < ActiveRecord::Base
-  default_scope { order('id desc') }
-
-  validates :first_name, :last_name, :phone, :address, :specialization, :degree, presence: true
+module Applicant
+  def self.table_name_prefix
+    'applicant_'
+  end
 end

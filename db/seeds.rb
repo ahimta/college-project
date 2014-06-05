@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Applicant.destroy_all
+Applicant::JobRequest.destroy_all
 
 applicants = [
   {first_name: 'الخليل', last_name: 'أحمد الفراهيدي', phone: '0512345678', address: 'عمان',
@@ -18,5 +18,5 @@ applicants = [
 ]
 
 applicants.each do |applicant|
-  Applicant.create! applicant
+  Applicant::JobRequest.create! applicant
 end
