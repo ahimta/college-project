@@ -1,6 +1,6 @@
-require_relative '../validators/present'
+require_relative '../../validators/present'
 
-module API::V1::Params::Applicant
+module API::V1::Params::Applicant::JobRequest
   extend Grape::API::Helpers
 
   params :applicant do

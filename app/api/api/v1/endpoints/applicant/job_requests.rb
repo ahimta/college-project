@@ -2,7 +2,7 @@ class API::V1::Endpoints::Applicant::JobRequests < Grape::API
   include API::V1::Defaults
 
   resource 'applicant/job_requests' do
-    helpers API::V1::Params::Applicant
+    helpers API::V1::Params::Applicant::JobRequest
     helpers API::V1::Helpers::Shared
     helpers do
       def model
