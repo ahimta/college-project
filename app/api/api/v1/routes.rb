@@ -1,6 +1,4 @@
-module API::V1
-  class Routes < Grape::API
-    mount Endpoints::Applicant::Routes
-    mount Endpoints::Admin::Routes
-  end
+class API::V1::Routes < Grape::API
+  mount API::V1::Endpoints::Applicant::Routes
+  mount API::V1::Endpoints::Admin::Routes
 end
