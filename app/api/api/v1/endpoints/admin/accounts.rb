@@ -11,7 +11,7 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
       end
 
       def entity
-        @entity ||= API::V1::Entities::Admin
+        @entity ||= API::V1::Entities::Admin::Account
       end
     end
 

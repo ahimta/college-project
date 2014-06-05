@@ -6,7 +6,7 @@ describe API::V1::Endpoints::Admin::Accounts do
   collection = 'admin_accounts'
   url = "/api/v1/#{resource}"
 
-  args = [Admin::Account, API::V1::Entities::Admin, resource, :admin_account]
+  args = [Admin::Account, API::V1::Entities::Admin::Account, resource, :admin_account]
   create_factories = {
     valid: [
       :admin_account_with_correct_password_confirmation,

@@ -10,7 +10,7 @@ class API::V1::Endpoints::Applicant::JobRequests < Grape::API
       end
 
       def entity
-        @entity ||= API::V1::Entities::Applicant
+        @entity ||= API::V1::Entities::Applicant::JobRequest
       end
     end
 
