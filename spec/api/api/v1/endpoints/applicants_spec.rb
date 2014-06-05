@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe API::V1::Applicants do
+describe API::V1::Endpoints::Applicants do
 
   args = [Applicant, API::V1::Entities::Applicant, 'applicants']
   factories = {valid: [:applicant], invalid: [:invalid_applicant]}

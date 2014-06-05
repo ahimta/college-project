@@ -1,5 +1,5 @@
 module API::V1
-  class Admins < Grape::API
+  class Endpoints::Admins < Grape::API
     include Defaults
 
     resource :admins do
