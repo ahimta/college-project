@@ -6,15 +6,11 @@ shared_examples '/api/v1/admin/accounts - not_logged_in' do
 
     context 'allowed' do
       it_behaves_like 'controllers/login', Admin::Account, resource, Loginable::AdminRole
-      it_behaves_like 'controllers/logout', Admin::Account, resource
     end
 
     context 'forbidden' do
       after { expect(response.status).to eq(401) }
 
-      context 'create' do
-        it { post url }
-      end
       context 'index' do
         it { get url }
       end
@@ -22,11 +18,18 @@ shared_examples '/api/v1/admin/accounts - not_logged_in' do
         it { get "#{url}/99" }
 
       end
+      context 'create' do
+        it { post url }
+      end
       context 'update' do
         it { put "#{url}/99" }
       end
       context 'destroy' do
         it { delete "#{url}/99" }
+      end
+
+      context 'logout' do
+        it { delete "#{url}/logout" }
       end
     end
 end

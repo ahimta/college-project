@@ -5,7 +5,6 @@ shared_examples '/api/v1/admin/accounts - logged_in - deletable' do |args, creat
   context 'allowed' do
     it_behaves_like 'controllers/index', *args
     it_behaves_like 'controllers/show', *args
-    it_behaves_like 'controllers/create', *(args + [create_factories])
     it_behaves_like 'controllers/update', *(args + [update_factories])
   end
 
@@ -20,6 +19,7 @@ shared_examples '/api/v1/admin/accounts - logged_in - deletable' do |args, creat
 
     context 'destroy' do
       it { delete "/api/v1/admin/accounts/#{account.id}" }
+      it { post "/api/v1/admin/accounts" }
     end
   end
 end

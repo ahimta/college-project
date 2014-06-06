@@ -15,6 +15,7 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
       end
     end
 
+    desc 'for all users and visitors'
     namespace do
       params do
         use :login
@@ -34,52 +35,66 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
       end
     end
 
+    desc 'only for logged in admins'
     namespace do
       before do
         authenticate!
       end
 
-      get do
-        present model.all, with: entity
-      end
-
-      desc 'Create an admin'
-      params do
-        use :admin_create
-      end
-      post do
-        present model.create!(safe_params[:admin_account]), with: entity
-      end
-
-      desc 'Log out an admin'
-      delete :logout do
-        session.delete :user_type
-        session.delete :user_id
-      end
-
-      route_param :id, type: Integer, desc: 'admin id' do
+      desc 'only for logged in non-deletable admins'
+      namespace do
         before do
+          error!('Unauthorized', 401) if current_user.deletable
           @record = model.find(params[:id])
         end
 
-        desc 'Get an admin by id'
-        get do
-          present @record, with: entity
-        end
-
-        desc 'Update an admin by id'
+        desc 'Create an admin'
         params do
-          use :admin_update
+          use :admin_create
         end
-        put do
-          @record.update! safe_params[:admin_account]
-          present @record, with: entity
+        post do
+          present model.create!(safe_params[:admin_account]), with: entity
         end
 
-        desc 'Delete an admin by id'
-        delete do
-          error!('Unautherized', 401) if not @record.deletable or current_user.deletable
-          present @record.destroy, with: entity
+        route_param :id, type: Integer, desc: 'admin id' do
+          desc 'Delete an admin by id'
+          delete do
+            error!('Unautherized', 401) unless @record.deletable
+            present @record.destroy, with: entity
+          end
+        end
+      end
+
+      desc 'for all admins'
+      namespace do
+        get do
+          present model.all, with: entity
+        end
+
+        desc 'Log out an admin'
+        delete :logout do
+          session.delete :user_type
+          session.delete :user_id
+        end
+
+        route_param :id, type: Integer, desc: 'admin id' do
+          before do
+            @record = model.find(params[:id])
+          end
+
+          desc 'Get an admin by id'
+          get do
+            present @record, with: entity
+          end
+
+          desc 'Update an admin by id'
+          params do
+            use :admin_update
+          end
+          put do
+            @record.update! safe_params[:admin_account]
+            present @record, with: entity
+          end
         end
       end
     end
