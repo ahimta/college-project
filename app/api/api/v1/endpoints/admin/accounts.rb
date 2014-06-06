@@ -70,14 +70,16 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
           use :admin_create
         end
         post do
-          present model.create!(safe_params[:admin_account]), with: entity
+          admin_account = safe_params[:admin_account]
+          error!('', 409) unless account_manager.username_available? admin_account[:username]
+          present model.create!(admin_account), with: entity
         end
 
         params do
           requires :username, type: String, presence: true
         end
         head :username_available do
-          error!('', 409) unless Loginable.username_available?(params[:username], session)
+          error!('', 409) unless account_manager.username_available? params[:username]
         end
 
         get do
