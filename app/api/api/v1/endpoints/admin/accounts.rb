@@ -41,8 +41,17 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
         authenticate!
       end
 
-      namespace do
+      namespace :my_account do
+        get do
+          present current_user, with: entity
+        end
 
+        delete do
+          present current_user.destroy, with: entity
+
+          session.delete :user_type
+          session.delete :user_id
+        end
       end
 
       desc 'only for logged in non-deletable admins'

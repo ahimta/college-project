@@ -6,6 +6,8 @@ shared_examples '/api/v1/admin/accounts - logged_in - deletable' do |args, creat
   url = '/api/v1/admin/accounts'
 
   context 'allowed' do
+    it_behaves_like('controllers/my_account', Admin::Account, resource,
+      API::V1::Entities::Admin::Account, Loginable::AdminRole)
   end
 
   context 'not allowed' do
