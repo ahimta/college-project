@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-shared_examples 'controllers/username_available' do |resource|
+shared_examples 'controllers/accountable/username_available' do |resource|
 
   factory = resource.split('/').join('_')[0..-2]
   url = "/api/v1/#{resource}"

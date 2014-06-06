@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-shared_examples 'controllers/logout' do |model, resource|
+shared_examples 'controllers/accountable/logout' do |model, resource|
   name = resource.split('/').join('_')[0..-2]
 
   describe "DELETE /api/v1/#{resource}/logout" do

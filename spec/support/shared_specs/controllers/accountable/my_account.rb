@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-shared_examples 'controllers/my_account' do |model, resource, entity, role|
+shared_examples 'controllers/accountable/my_account' do |model, resource, entity, role|
 
   url = "/api/v1/#{resource}"
 

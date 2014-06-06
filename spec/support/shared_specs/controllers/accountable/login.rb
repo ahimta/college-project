@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-shared_examples 'controllers/login' do |model, resource, user_type|
+shared_examples 'controllers/accountable/login' do |model, resource, user_type|
   url = "/api/v1/#{resource}/login"
   name = resource.split('/').join('_')[0..-2]
 

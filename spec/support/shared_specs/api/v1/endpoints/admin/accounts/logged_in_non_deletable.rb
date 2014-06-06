@@ -15,10 +15,10 @@ shared_examples '/api/v1/admin/accounts - logged_in - non-deletable' do |args, c
     it_behaves_like 'controllers/create', *(args + [create_factories])
     it_behaves_like 'controllers/update', *(args + [update_factories])
 
-    it_behaves_like 'controllers/logout', model, resource
-    it_behaves_like 'controllers/username_available', resource
+    it_behaves_like 'controllers/accountable/logout', model, resource
+    it_behaves_like 'controllers/accountable/username_available', resource
     it_behaves_like 'controllers/accountable/create', model, resource
-    it_behaves_like('controllers/my_account', model, resource,
+    it_behaves_like('controllers/accountable/my_account', model, resource,
       entity, role)
   end
 
