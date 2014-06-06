@@ -1,5 +1,3 @@
-module API
-  class Routes < Grape::API
-    mount V1::Routes
-  end
+class API::Routes < Grape::API
+  mount API::V1::Routes
 end
