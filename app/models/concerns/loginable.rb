@@ -13,6 +13,14 @@ module Loginable
     end
   end
 
+  def self.username_available?(username, session)
+    case session[:user_type]
+    when AdminRole
+      not Admin::Account.where('lower(username) = ?', username.downcase).first
+    else raise ArgumentError
+    end
+  end
+
   included do
     has_secure_password
 

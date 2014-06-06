@@ -2,6 +2,8 @@ require 'spec_helper'
 
 shared_examples '/api/v1/admin/accounts - logged_in - deletable' do |args, create_factories, update_factories|
 
+  url = '/api/v1/admin/accounts'
+
   context 'allowed' do
     it_behaves_like 'controllers/index', *args
     it_behaves_like 'controllers/show', *args
@@ -17,9 +19,14 @@ shared_examples '/api/v1/admin/accounts - logged_in - deletable' do |args, creat
     after { expect(Admin::Account.count).to eq(count) }
     after { expect(response.status).to eq(401) }
 
+    context 'create' do
+      it { post url }
+    end
     context 'destroy' do
-      it { delete "/api/v1/admin/accounts/#{account.id}" }
-      it { post "/api/v1/admin/accounts" }
+      it { delete "#{url}/#{account.id}" }
+    end
+    context 'username_available' do
+      it { head "#{url}/username_available?username=hi" }
     end
   end
 end

@@ -31,5 +31,9 @@ shared_examples '/api/v1/admin/accounts - not_logged_in' do
       context 'logout' do
         it { delete "#{url}/logout" }
       end
+
+      context 'username_available' do
+        it { head "#{url}/username_available?username=hi" }
+      end
     end
 end

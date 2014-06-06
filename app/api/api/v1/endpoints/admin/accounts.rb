@@ -45,7 +45,6 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
       namespace do
         before do
           error!('Unauthorized', 401) if current_user.deletable
-          @record = model.find(params[:id])
         end
 
         desc 'Create an admin'
@@ -56,9 +55,17 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
           present model.create!(safe_params[:admin_account]), with: entity
         end
 
+        params do
+          requires :username, type: String, presence: true
+        end
+        head :username_available do
+          error!('', 409) unless Loginable.username_available?(params[:username], session)
+        end
+
         route_param :id, type: Integer, desc: 'admin id' do
           desc 'Delete an admin by id'
           delete do
+            @record = model.find(params[:id])
             error!('Unautherized', 401) unless @record.deletable
             present @record.destroy, with: entity
           end
