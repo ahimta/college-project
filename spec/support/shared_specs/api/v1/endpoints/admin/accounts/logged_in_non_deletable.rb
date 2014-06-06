@@ -4,6 +4,7 @@ shared_examples '/api/v1/admin/accounts - logged_in - non-deletable' do |args, c
 
   resource = 'admin/accounts'
   url = '/api/v1/admin/accounts'
+  model = Admin::Account
 
   describe "HEAD #{url}/username_available" do
     let(:action!) { head "#{url}/username_available?username=#{username}" }
@@ -30,6 +31,8 @@ shared_examples '/api/v1/admin/accounts - logged_in - non-deletable' do |args, c
     it_behaves_like 'controllers/destroy', *args
     it_behaves_like 'controllers/create', *(args + [create_factories])
     it_behaves_like 'controllers/update', *(args + [update_factories])
+
+    it_behaves_like 'controllers/logout', model, resource
     it_behaves_like('controllers/my_account', Admin::Account, resource,
       API::V1::Entities::Admin::Account, Loginable::AdminRole)
   end

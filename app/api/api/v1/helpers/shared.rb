@@ -9,8 +9,12 @@ module API::V1::Helpers::Shared
       session[:user_type] == Loginable::AdminRole
   end
 
+  def account_manager
+    @account_manager ||= Account::AccountManager.new(session)
+  end
+
   def current_user
-    @current_user ||= Loginable.current_user(session) if session[:user_id] and session[:user_type]
+    @current_user ||= account_manager.current_user if session[:user_id] and session[:user_type]
   end
 
   def safe_params

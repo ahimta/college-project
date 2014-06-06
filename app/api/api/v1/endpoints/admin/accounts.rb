@@ -54,6 +54,11 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
         end
       end
 
+      desc 'Log out an admin'
+      delete :logout do
+        account_manager.logout
+      end
+
       desc 'only for logged in non-deletable admins'
       namespace do
         before do
@@ -77,12 +82,6 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
 
         get do
           present model.all, with: entity
-        end
-
-        desc 'Log out an admin'
-        delete :logout do
-          session.delete :user_type
-          session.delete :user_id
         end
 
         route_param :id, type: Integer, desc: 'admin id' do

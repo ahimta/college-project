@@ -7,18 +7,11 @@ module Loginable
   #   - session[:user_type] is not nil
   #   - session[:user_id] is not nil
   def self.current_user(session)
-    case session[:user_type]
-    when AdminRole then Admin::Account.find session[:user_id]
-    else raise ArgumentError
-    end
+    Account::AccountManager.new(session).current_user
   end
 
   def self.username_available?(username, session)
-    case session[:user_type]
-    when AdminRole
-      not Admin::Account.where('lower(username) = ?', username.downcase).first
-    else raise ArgumentError
-    end
+    Account::AccountManager.new(session).username_available? username
   end
 
   included do
