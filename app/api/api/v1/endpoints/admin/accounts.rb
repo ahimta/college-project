@@ -38,7 +38,7 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
     desc 'for all admins'
     namespace do
       before do
-        authenticate!
+        authenticate_admin!
       end
 
       namespace :my_account do
