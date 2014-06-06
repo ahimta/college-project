@@ -67,7 +67,7 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
 
         desc 'Create an admin'
         params do
-          use :admin_create
+          use :admin_account_create
         end
         post do
           admin_account = safe_params[:admin_account]
@@ -98,7 +98,7 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
 
           desc 'Update an admin by id'
           params do
-            use :admin_update
+            use :admin_account_update
           end
           put do
             @record.update! safe_params[:admin_account]

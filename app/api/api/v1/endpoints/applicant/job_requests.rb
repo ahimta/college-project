@@ -26,7 +26,7 @@ class API::V1::Endpoints::Applicant::JobRequests < Grape::API
 
     namespace do
       before do
-        authenticate!
+        authenticate_admin!
       end
 
       desc 'Return all applicants.'

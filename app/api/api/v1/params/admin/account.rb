@@ -21,7 +21,7 @@ module API::V1::Params::Admin::Account
   end
 
 
-  params :admin_create do
+  params :admin_account_create do
     requires :admin_account, type: Hash do
       requires :full_name, type: String, present: true
       requires :username, type: String, present: true
@@ -31,7 +31,7 @@ module API::V1::Params::Admin::Account
     end
   end
 
-  params :admin_update do
+  params :admin_account_update do
     requires :admin_account, type: Hash do
       requires :full_name, type: String, present: true
       requires :username, type: String, present: true
