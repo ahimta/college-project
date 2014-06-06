@@ -6,7 +6,7 @@ class CreateAdminAccounts < ActiveRecord::Migration
       t.string :password_digest, null: false
       t.boolean :is_active, default: true
 
-      t.boolean :deletable, dafault: false
+      t.boolean :deletable, default: true
 
       t.timestamps
     end

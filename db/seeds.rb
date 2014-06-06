@@ -9,7 +9,7 @@
 Applicant::JobRequest.destroy_all
 Admin::Account.destroy_all
 
-Admin::Account.create! full_name: 'ابن سينا', username: 'admin', password: 'admin', deletable: true
+Admin::Account.create! full_name: 'ابن سينا', username: 'admin', password: 'admin', deletable: false
 
 job_requests = [
   {full_name: 'الخليل أحمد الفراهيدي', phone: '0512345678', address: 'عمان',

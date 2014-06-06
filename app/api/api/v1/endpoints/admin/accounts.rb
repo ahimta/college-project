@@ -78,6 +78,7 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
 
         desc 'Delete an admin by id'
         delete do
+          error!('Unautherized', 401) if not @record.deletable or current_user.deletable
           present @record.destroy, with: entity
         end
       end

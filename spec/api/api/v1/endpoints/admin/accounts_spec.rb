@@ -27,12 +27,22 @@ describe API::V1::Endpoints::Admin::Accounts do
   }
 
   context 'logged in' do
-    let!(:_admin) { FactoryGirl.create :admin_account }
     let(:_login) { {login: {username: _admin.username, password: _admin.password}} }
 
     before { post "#{url}/login", _login }
 
-    it_behaves_like "#{url} - logged_in", args, create_factories, update_factories
+    context 'deletable' do
+      let!(:_admin) { FactoryGirl.create :admin_account }
+
+      it_behaves_like("#{url} - logged_in - deletable", args, create_factories,
+        update_factories)
+    end
+    context 'non-deletable' do
+      let!(:_admin) { FactoryGirl.create :admin_account, deletable: false }
+
+      it_behaves_like("#{url} - logged_in - non-deletable", args, create_factories,
+        update_factories)
+    end
   end
 
   context 'not logged in' do
