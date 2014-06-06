@@ -20,11 +20,13 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
         use :login
       end
       post :login do
-        user = safe_params[:login]
-        admin = model.login(user[:username], user[:password])
+        return if session[:user_type]
 
-        if admin
-          session[:user_id] = admin.id
+        login = safe_params[:login]
+        user  = model.login(login[:username], login[:password])
+
+        if user
+          session[:user_id] = user.id
           session[:user_type] = Loginable::AdminRole
         else
           error!('401', 401)
@@ -57,12 +59,12 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
 
       route_param :id, type: Integer, desc: 'admin id' do
         before do
-          @admin = model.find(params[:id])
+          @record = model.find(params[:id])
         end
 
         desc 'Get an admin by id'
         get do
-          present @admin, with: entity
+          present @record, with: entity
         end
 
         desc 'Update an admin by id'
@@ -70,13 +72,13 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
           use :admin_update
         end
         put do
-          @admin.update! safe_params[:admin_account]
-          present @admin, with: entity
+          @record.update! safe_params[:admin_account]
+          present @record, with: entity
         end
 
         desc 'Delete an admin by id'
         delete do
-          present @admin.destroy, with: entity
+          present @record.destroy, with: entity
         end
       end
     end

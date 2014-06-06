@@ -18,6 +18,7 @@ shared_examples 'controllers/login' do |model, resource, user_type|
       }
 
       it { action! }
+      it { action! }
 
       after { expect(session[:user_type]).to eq(user_type) }
       after { expect(session[:user_id]).to eq(user.id) }
