@@ -5,11 +5,16 @@ describe API::V1::Endpoints::Applicant::JobRequests do
   args = [Applicant::JobRequest, API::V1::Entities::Applicant::JobRequest, 'applicant/job_requests']
   factories = {valid: [:applicant_job_request], invalid: [:invalid_applicant_job_request]}
 
-  it_behaves_like 'controllers/index', *args
-  it_behaves_like 'controllers/show', *args
-  it_behaves_like 'controllers/destroy', *args
-  it_behaves_like 'controllers/create', *(args + [factories])
-  it_behaves_like 'controllers/update', *(args + [factories])
+  context 'logged in' do
+    let!(:_admin) { FactoryGirl.create :admin_account }
+    let!(:_login) { {login: {username: _admin.username, password: _admin.password}} }
 
-  it_behaves_like 'controllers/decidable', *args
+    before { post '/api/v1/admin/accounts/login', _login }
+
+    it_behaves_like '/api/v1/applicant/job_requests - logged_in', args, factories
+  end
+
+  context 'not logged in' do
+    it_behaves_like '/api/v1/applicant/job_requests - not_logged_in', (args + [factories])
+  end
 end
