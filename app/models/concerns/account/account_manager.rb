@@ -8,12 +8,11 @@ class Account::AccountManager
       raise ArgumentError
     end
 
-    @user_id = session[:user_id]
     @session = session
   end
 
   def current_user
-    @current_user ||= @model.find @user_id if @user_id
+    @current_user ||= @model.find @session[:user_id] if @session[:user_id]
   end
 
   def login(username, password)
