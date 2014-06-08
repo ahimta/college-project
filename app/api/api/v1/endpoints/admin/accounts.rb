@@ -29,6 +29,9 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
         if user
           session[:user_id] = user.id
           session[:user_type] = Loginable::AdminRole
+
+          present user, with: entity
+          present :role, Loginable::AdminRole
         else
           error!('401', 401)
         end
