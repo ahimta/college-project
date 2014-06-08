@@ -15,7 +15,7 @@ shared_examples 'controllers/destroy' do |model, entity, resource|
     context 'exist' do
       it { delete "#{url}/#{record.id}" }
 
-      after { expect(json_response).to eq(expected_record) }
+      after { expect(json_response[name]).to eq(expected_record) }
       after { expect(model.count).to eq(count - 1) }
     end
 

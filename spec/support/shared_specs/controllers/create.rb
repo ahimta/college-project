@@ -19,7 +19,7 @@ shared_examples 'controllers/create' do |model, entity, resource, factories|
 
         it { action }
 
-        after { expect(json_response).to eq(expected_record) }
+        after { expect(json_response[name]).to eq(expected_record) }
         after { expect(response.status).to eq(201) }
         after { expect(model.count).to eq(old_count + 1) }
       end

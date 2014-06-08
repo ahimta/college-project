@@ -28,7 +28,7 @@ shared_examples 'controllers/update' do |model, entity, resource, factories|
         it { action }
 
         after { expect(model.first.attributes.to_s).to_not eq(record.attributes.to_s) }
-        after { expect(json_response).to eq(expected_record) }
+        after { expect(json_response[name]).to eq(expected_record) }
         after { expect(response.status).to eq(200) }
       end
     end

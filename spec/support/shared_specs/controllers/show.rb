@@ -12,7 +12,7 @@ shared_examples 'controllers/show' do |model, entity, resource|
 
       it { get "#{url}/#{record.id}" }
 
-      after { expect(json_response).to eq(expected_record) }
+      after { expect(json_response[name]).to eq(expected_record) }
       after { expect(response.status).to eq(200) }
     end
     context 'does not exist' do
