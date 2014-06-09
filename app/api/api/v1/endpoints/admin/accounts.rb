@@ -44,21 +44,6 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
         authenticate_admin!
       end
 
-      namespace :my_account do
-        get do
-          present :account, current_user, with: entity
-          present :role, 'admin'
-        end
-
-        delete do
-          present :account, current_user.destroy, with: entity
-          present :role, 'admin'
-
-          session.delete :user_type
-          session.delete :user_id
-        end
-      end
-
       desc 'Log out an admin'
       delete :logout do
         account_manager.logout

@@ -3,14 +3,15 @@ require 'spec_helper'
 shared_examples 'controllers/accountable/my_account' do |model, resource, entity, role|
 
   name = resource[0..-2]
-  url = "/api/v1/#{resource}"
+  url = "/api/v1/accountable"
 
-  after { expect(json_response['role']).to eq(Loginable::AdminRole) }
   after { expect(json_response['account']).to eq(expected_record) }
+  after { expect(json_response['role']).to eq(role) }
 
   describe "GET #{url}/my_account" do
-    let(:expected_record) { serialized_record(entity, current_user) }
     let!(:count) { model.count }
+
+    let(:expected_record) { serialized_record(entity, current_user) }
 
     before { expect(model.count).to eq(count) }
 
@@ -24,8 +25,9 @@ shared_examples 'controllers/accountable/my_account' do |model, resource, entity
   end
 
   describe "DELETE #{url}/my_account" do
-    let(:expected_record) { serialized_record(entity, current_user) }
     let!(:count) { model.count }
+
+    let(:expected_record) { serialized_record(entity, current_user) }
 
     before { expect(model.count).to eq(count) }
 
