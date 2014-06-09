@@ -3,12 +3,21 @@ class Account::AccountManager
   def initialize(session)
     case session[:user_type]
     when 'admin'
+      @entity = API::V1::Entities::Admin::Account
       @model = Admin::Account
     else
       raise ArgumentError
     end
 
     @session = session
+  end
+
+  def role
+    @role ||= @session[:user_type]
+  end
+
+  def entity
+    @entity
   end
 
   def current_user
