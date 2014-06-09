@@ -32,7 +32,8 @@ shared_examples 'controllers/index' do |model, entity, resource|
 
       it { action }
 
-      after { expect(json_response).to eq(expected_records) }
+      after { expect(json_response[collection].length).to eq(count) }
+      after { expect(json_response[collection]).to eq(expected_records) }
       after { expect(response.status).to eq(200) }
       after { expect(model.count).to eq(count) }
     end

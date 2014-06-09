@@ -7,7 +7,7 @@ shared_examples 'controllers/accountable/login' do |model, resource, user_type|
   describe "POST #{url}" do
     let!(:user) { FactoryGirl.create name }
 
-    let(:expected_account) { serialized_record(API::V1::Entities::Admin::Account, user)['admin_account'] }
+    let(:expected_account) { serialized_record(API::V1::Entities::Admin::Account, user) }
     let(:action!) { post url, params }
     let(:count)  { 1 }
 
@@ -22,7 +22,7 @@ shared_examples 'controllers/accountable/login' do |model, resource, user_type|
       it { action! }
       it { action! }
 
-      after { expect(json_response['admin_account']).to eq(expected_account) }
+      after { expect(json_response['account']).to eq(expected_account) }
       after { expect(json_response['role']).to eq(user_type) }
       after { expect(session[:user_type]).to eq(user_type) }
       after { expect(session[:user_id]).to eq(user.id) }

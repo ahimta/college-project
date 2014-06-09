@@ -30,7 +30,7 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
           session[:user_id] = user.id
           session[:user_type] = Loginable::AdminRole
 
-          present user, with: entity
+          present :account, user, with: entity
           present :role, Loginable::AdminRole
         else
           error!('401', 401)
@@ -46,11 +46,13 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
 
       namespace :my_account do
         get do
-          present current_user, with: entity
+          present :account, current_user, with: entity
+          present :role, 'admin'
         end
 
         delete do
-          present current_user.destroy, with: entity
+          present :account, current_user.destroy, with: entity
+          present :role, 'admin'
 
           session.delete :user_type
           session.delete :user_id
@@ -75,7 +77,7 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
         post do
           admin_account = safe_params[:admin_account]
           error!('', 409) unless account_manager.username_available? admin_account[:username]
-          present model.create!(admin_account), with: entity
+          present :admin_account, model.create!(admin_account), with: entity
         end
 
         params do
@@ -86,7 +88,7 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
         end
 
         get do
-          present model.all, with: entity
+          present :admin_accounts, model.all, with: entity
         end
 
         route_param :id, type: Integer, desc: 'admin id' do
@@ -96,7 +98,7 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
 
           desc 'Get an admin by id'
           get do
-            present @record, with: entity
+            present :admin_account, @record, with: entity
           end
 
           desc 'Update an admin by id'
@@ -105,13 +107,13 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
           end
           put do
             @record.update! safe_params[:admin_account]
-            present @record, with: entity
+            present :admin_account, @record, with: entity
           end
 
           desc 'Delete an admin by id'
           delete do
             error!('Unautherized', 401) unless @record.deletable
-            present @record.destroy, with: entity
+            present :admin_account, @record.destroy, with: entity
           end
         end
       end

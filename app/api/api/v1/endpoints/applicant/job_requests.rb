@@ -20,7 +20,7 @@ class API::V1::Endpoints::Applicant::JobRequests < Grape::API
         use :applicant_job_request
       end
       post do
-        present model.create!(safe_params[:applicant_job_request]), with: entity
+        present :applicant_job_request, model.create!(safe_params[:applicant_job_request]), with: entity
       end
     end
 
@@ -31,7 +31,7 @@ class API::V1::Endpoints::Applicant::JobRequests < Grape::API
 
       desc 'Return all applicants.'
       get do
-        present model.all, with: entity
+        present :applicant_job_requests, model.all, with: entity
       end
 
       route_param :id, type: Integer, desc: 'Applicant id.' do
@@ -41,7 +41,7 @@ class API::V1::Endpoints::Applicant::JobRequests < Grape::API
 
         desc 'Get an applicant by id.'
         get do
-          present @record, with: entity
+          present :applicant_job_request, @record, with: entity
         end
 
         desc 'Update an applicant.'
@@ -50,12 +50,12 @@ class API::V1::Endpoints::Applicant::JobRequests < Grape::API
         end
         put do
           @record.update!(safe_params[:applicant_job_request])
-          present @record, with: entity
+          present :applicant_job_request, @record, with: entity
         end
 
         desc 'Delete an applicant.'
         delete do
-          present @record.destroy, with: entity
+          present :applicant_job_request, @record.destroy, with: entity
         end
 
         desc 'Accept an applicant.'
