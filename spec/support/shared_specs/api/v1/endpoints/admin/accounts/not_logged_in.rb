@@ -5,7 +5,8 @@ shared_examples '/api/v1/admin/accounts - not_logged_in' do
   url = "/api/v1/#{resource}"
 
   context 'allowed' do
-    it_behaves_like 'controllers/accountable/login', Admin::Account, resource, Loginable::AdminRole
+    it_behaves_like('controllers/accountable/login', Admin::Account, resource,
+      API::V1::Entities::Admin::Account, Loginable::AdminRole)
   end
 
   context 'forbidden' do

@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-shared_examples 'controllers/accountable/login' do |model, resource, user_type|
+shared_examples 'controllers/accountable/login' do |model, resource, entity, role|
   url = "/api/v1/#{resource}/login"
   name = resource.split('/').join('_')[0..-2]
 
   describe "POST #{url}" do
     let!(:user) { FactoryGirl.create name }
 
-    let(:expected_account) { serialized_record(API::V1::Entities::Admin::Account, user) }
+    let(:expected_account) { serialized_record(entity, user) }
     let(:action!) { post url, params }
     let(:count)  { 1 }
 
@@ -23,8 +23,8 @@ shared_examples 'controllers/accountable/login' do |model, resource, user_type|
       it { action! }
 
       after { expect(json_response['account']).to eq(expected_account) }
-      after { expect(json_response['role']).to eq(user_type) }
-      after { expect(session[:user_type]).to eq(user_type) }
+      after { expect(json_response['role']).to eq(role) }
+      after { expect(session[:user_type]).to eq(role) }
       after { expect(session[:user_id]).to eq(user.id) }
       after { expect(response.status).to eq(201) }
     end
