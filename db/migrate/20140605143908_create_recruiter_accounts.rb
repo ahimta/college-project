@@ -1,6 +1,6 @@
-class CreateAdminAccounts < ActiveRecord::Migration
+class CreateRecruiterAccounts < ActiveRecord::Migration
   def change
-    create_table :admin_accounts do |t|
+    create_table :recruiter_accounts do |t|
       t.string :full_name, null: false
       t.string :username, null: false
       t.string :password_digest, null: false
@@ -11,7 +11,6 @@ class CreateAdminAccounts < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :admin_accounts, [:username, :password_digest]
-    add_index :admin_accounts, :username, unique: true
+    add_index :recruiter_accounts, :username, unique: true
   end
 end

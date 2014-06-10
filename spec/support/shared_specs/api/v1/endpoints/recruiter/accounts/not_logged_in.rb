@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-shared_examples '/api/v1/admin/accounts - not_logged_in' do
-  resource = 'admin/accounts'
+shared_examples '/api/v1/recruiter/accounts - not_logged_in' do
+  resource = 'recruiter/accounts'
   url = "/api/v1/#{resource}"
 
   context 'allowed' do
-    it_behaves_like('controllers/accountable/login', Admin::Account, resource,
-      API::V1::Entities::Admin::Account, Loginable::AdminRole)
+    it_behaves_like('controllers/accountable/login', Recruiter::Account, resource,
+      API::V1::Entities::Recruiter::Account, Loginable::AdminRole)
   end
 
   context 'forbidden' do

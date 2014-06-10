@@ -13,19 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20140605200608) do
 
-  create_table "admin_accounts", force: true do |t|
-    t.string   "full_name",                      null: false
-    t.string   "username",                       null: false
-    t.string   "password_digest",                null: false
-    t.boolean  "is_active",       default: true
-    t.boolean  "deletable",       default: true
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "admin_accounts", ["username", "password_digest"], name: "index_admin_accounts_on_username_and_password_digest"
-  add_index "admin_accounts", ["username"], name: "index_admin_accounts_on_username", unique: true
-
   create_table "applicant_job_requests", force: true do |t|
     t.string   "specialization", null: false
     t.string   "full_name",      null: false
@@ -36,5 +23,17 @@ ActiveRecord::Schema.define(version: 20140605200608) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "recruiter_accounts", force: true do |t|
+    t.string   "full_name",                      null: false
+    t.string   "username",                       null: false
+    t.string   "password_digest",                null: false
+    t.boolean  "is_active",       default: true
+    t.boolean  "deletable",       default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "recruiter_accounts", ["username"], name: "index_recruiter_accounts_on_username", unique: true
 
 end

@@ -9,10 +9,10 @@ describe API::V1::Endpoints::Applicant::JobRequests do
   factories = {valid: [:applicant_job_request], invalid: [:invalid_applicant_job_request]}
 
   context 'logged in' do
-    let!(:_admin) { FactoryGirl.create :admin_account }
+    let!(:_admin) { FactoryGirl.create :recruiter_account }
     let!(:_login) { {login: {username: _admin.username, password: _admin.password}} }
 
-    before { post '/api/v1/admin/accounts/login', _login }
+    before { post '/api/v1/recruiter/accounts/login', _login }
 
     it_behaves_like "#{url} - logged_in", args, factories
   end

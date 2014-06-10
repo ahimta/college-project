@@ -3,8 +3,8 @@ class Account::AccountManager
   def initialize(session)
     case session[:user_type]
     when 'admin'
-      @entity = API::V1::Entities::Admin::Account
-      @model = Admin::Account
+      @entity = API::V1::Entities::Recruiter::Account
+      @model = Recruiter::Account
     else
       raise ArgumentError
     end

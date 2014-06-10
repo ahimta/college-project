@@ -1,24 +1,24 @@
 require 'spec_helper'
 
-shared_examples '/api/v1/admin/accounts - logged_in - deletable' do |args, create_factories, update_factories|
+shared_examples '/api/v1/recruiter/accounts - logged_in - deletable' do |args, create_factories, update_factories|
 
-  resource = 'admin/accounts'
-  url = '/api/v1/admin/accounts'
-  model = Admin::Account
+  resource = 'recruiter/accounts'
+  url = '/api/v1/recruiter/accounts'
+  model = Recruiter::Account
 
   context 'allowed' do
     it_behaves_like 'controllers/accountable/logout', model, resource
-    it_behaves_like('controllers/accountable/my_account', Admin::Account, resource,
-      API::V1::Entities::Admin::Account, Loginable::AdminRole)
+    it_behaves_like('controllers/accountable/my_account', Recruiter::Account, resource,
+      API::V1::Entities::Recruiter::Account, Loginable::AdminRole)
   end
 
   context 'not allowed' do
-    let!(:account) { FactoryGirl.create :admin_account }
-    let!(:count) { Admin::Account.count }
+    let!(:account) { FactoryGirl.create :recruiter_account }
+    let!(:count) { Recruiter::Account.count }
 
-    before { expect(Admin::Account.count).to eq(count) }
+    before { expect(Recruiter::Account.count).to eq(count) }
 
-    after { expect(Admin::Account.count).to eq(count) }
+    after { expect(Recruiter::Account.count).to eq(count) }
     after { expect(response.status).to eq(401) }
 
     context 'index' do

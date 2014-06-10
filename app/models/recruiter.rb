@@ -1,5 +1,5 @@
-module Admin
+module Recruiter
   def self.table_name_prefix
-    'admin_'
+    'recruiter_'
   end
 end

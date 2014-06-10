@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-shared_examples '/api/v1/admin/accounts - logged_in - non-deletable' do |args, create_factories, update_factories|
+shared_examples '/api/v1/recruiter/accounts - logged_in - non-deletable' do |args, create_factories, update_factories|
 
-  resource = 'admin/accounts'
-  url = '/api/v1/admin/accounts'
-  model = Admin::Account
-  entity = API::V1::Entities::Admin::Account
+  resource = 'recruiter/accounts'
+  url = '/api/v1/recruiter/accounts'
+  model = Recruiter::Account
+  entity = API::V1::Entities::Recruiter::Account
   role = Loginable::AdminRole
 
   context 'allowed' do
@@ -23,7 +23,7 @@ shared_examples '/api/v1/admin/accounts - logged_in - non-deletable' do |args, c
   end
 
   context 'not allowed' do
-    let!(:account) { FactoryGirl.create :admin_account, deletable: false }
+    let!(:account) { FactoryGirl.create :recruiter_account, deletable: false }
     let!(:count) { model.count }
 
     before { expect(model.count).to eq(count) }

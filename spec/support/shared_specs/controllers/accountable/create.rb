@@ -4,7 +4,7 @@ shared_examples 'controllers/accountable/create' do |model, resource|
 
   url = "/api/v1/#{resource}"
   factory = resource.split('/').join('_')[0..-2]
-  model = Admin::Account
+  model = Recruiter::Account
 
   describe "POST #{url}" do
     context 'existing username' do

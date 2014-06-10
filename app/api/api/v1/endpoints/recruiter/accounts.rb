@@ -1,17 +1,17 @@
-class API::V1::Endpoints::Admin::Accounts < Grape::API
+class API::V1::Endpoints::Recruiter::Accounts < Grape::API
   include API::V1::Defaults
 
-  resource 'admin/accounts' do
-    helpers API::V1::Params::Admin::Account
+  resource 'recruiter/accounts' do
+    helpers API::V1::Params::Recruiter::Account
     helpers API::V1::Helpers::Shared
     helpers API::V1::Params::Shared
     helpers do
       def model
-        @model ||= ::Admin::Account
+        @model ||= ::Recruiter::Account
       end
 
       def entity
-        @entity ||= API::V1::Entities::Admin::Account
+        @entity ||= API::V1::Entities::Recruiter::Account
       end
     end
 
@@ -57,12 +57,12 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
 
         desc 'Create an admin'
         params do
-          use :admin_account_create
+          use :recruiter_account_create
         end
         post do
-          admin_account = safe_params[:admin_account]
+          admin_account = safe_params[:recruiter_account]
           error!('', 409) unless account_manager.username_available? admin_account[:username]
-          present :admin_account, model.create!(admin_account), with: entity
+          present :recruiter_account, model.create!(admin_account), with: entity
         end
 
         params do
@@ -73,7 +73,7 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
         end
 
         get do
-          present :admin_accounts, model.all, with: entity
+          present :recruiter_accounts, model.all, with: entity
         end
 
         route_param :id, type: Integer, desc: 'admin id' do
@@ -83,22 +83,22 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
 
           desc 'Get an admin by id'
           get do
-            present :admin_account, @record, with: entity
+            present :recruiter_account, @record, with: entity
           end
 
           desc 'Update an admin by id'
           params do
-            use :admin_account_update
+            use :recruiter_account_update
           end
           put do
-            @record.update! safe_params[:admin_account]
-            present :admin_account, @record, with: entity
+            @record.update! safe_params[:recruiter_account]
+            present :recruiter_account, @record, with: entity
           end
 
           desc 'Delete an admin by id'
           delete do
             error!('Unautherized', 401) unless @record.deletable
-            present :admin_account, @record.destroy, with: entity
+            present :recruiter_account, @record.destroy, with: entity
           end
         end
       end
