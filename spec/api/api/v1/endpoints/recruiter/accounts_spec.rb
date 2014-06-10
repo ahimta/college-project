@@ -27,24 +27,15 @@ describe API::V1::Endpoints::Recruiter::Accounts do
   }
 
   context 'logged in' do
+    # WARNING: current_user name is not arbitrary, please don't change :-)
+    let!(:current_user) { FactoryGirl.create :recruiter_account }
+
     let(:_login) { {login: {username: current_user.username, password: current_user.password}} }
 
     before { post "#{url}/login", _login }
 
-    context 'deletable' do
-      # WARNING: current_user name is not arbitrary, please don't change :-)
-      let!(:current_user) { FactoryGirl.create :recruiter_account }
-
-      it_behaves_like("#{url} - logged_in - deletable", args, create_factories,
-        update_factories)
-    end
-    context 'non-deletable' do
-      # WARNING: current_user name is not arbitrary, please don't change :-)
-      let!(:current_user) { FactoryGirl.create :recruiter_account, deletable: false }
-
-      it_behaves_like("#{url} - logged_in - non-deletable", args, create_factories,
-        update_factories)
-    end
+    it_behaves_like("#{url} - logged_in", args, create_factories,
+      update_factories)
   end
 
   context 'not logged in' do
