@@ -1,5 +1,10 @@
 class Account::AccountManager
 
+  RecruiterRole = 0
+  StudentRole = 1
+  TeacherRole = 2
+  AdminRole = 3
+
   def initialize(session)
     case session[:user_type]
     when 'admin'
