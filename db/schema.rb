@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(version: 20140605200608) do
     t.string   "username",                       null: false
     t.string   "password_digest",                null: false
     t.boolean  "is_active",       default: true
-    t.boolean  "deletable",       default: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
