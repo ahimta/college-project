@@ -16,7 +16,7 @@ class API::V1::Endpoints::Accountable < Grape::API
 
       delete do
         present :account, current_user.destroy, with: account_manager.entity
-        present :role, 'admin'
+        present :role, account_manager.role
 
         session.delete :user_type
         session.delete :user_id

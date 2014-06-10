@@ -9,7 +9,7 @@ shared_examples '/api/v1/recruiter/accounts - logged_in' do |args, create_factor
   context 'allowed' do
     it_behaves_like 'controllers/accountable/logout', model, resource
     it_behaves_like('controllers/accountable/my_account', Recruiter::Account, resource,
-      API::V1::Entities::Recruiter::Account, Loginable::AdminRole)
+      API::V1::Entities::Recruiter::Account, Account::AccountManager::RecruiterRole)
   end
 
   context 'not allowed' do

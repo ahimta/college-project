@@ -7,7 +7,7 @@ class Account::AccountManager
 
   def initialize(session)
     case session[:user_type]
-    when 'admin'
+    when Account::AccountManager::RecruiterRole
       @entity = API::V1::Entities::Recruiter::Account
       @model = Recruiter::Account
     else

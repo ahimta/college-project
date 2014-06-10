@@ -28,78 +28,77 @@ class API::V1::Endpoints::Recruiter::Accounts < Grape::API
 
         if user
           session[:user_id] = user.id
-          session[:user_type] = Loginable::AdminRole
+          session[:user_type] = Account::AccountManager::RecruiterRole
 
           present :account, user, with: entity
-          present :role, Loginable::AdminRole
+          present :role, Account::AccountManager::RecruiterRole
         else
           error!('401', 401)
         end
       end
     end
 
-    desc 'for all admins'
+    desc 'for all recruiters'
+    namespace do
+      before do
+        authenticate_recruiter!
+      end
+
+      desc 'Log out a recruiter'
+      delete :logout do
+        account_manager.logout
+      end
+    end
+
+    desc 'only for logged in non-deletable recruiters'
     namespace do
       before do
         authenticate_admin!
       end
 
-      desc 'Log out an admin'
-      delete :logout do
-        account_manager.logout
+      desc 'Create a recruiter'
+      params do
+        use :recruiter_account_create
+      end
+      post do
+        recruiter_account = safe_params[:recruiter_account]
+        error!('', 409) unless account_manager.username_available? recruiter_account[:username]
+        present :recruiter_account, model.create!(recruiter_account), with: entity
       end
 
-      desc 'only for logged in non-deletable admins'
-      namespace do
+      params do
+        requires :username, type: String, presence: true
+      end
+      head :username_available do
+        error!('', 409) unless account_manager.username_available? params[:username]
+      end
+
+      get do
+        present :recruiter_accounts, model.all, with: entity
+      end
+
+      route_param :id, type: Integer, desc: 'recruiter id' do
         before do
-          error!('Unauthorized', 401) if current_user.deletable
+          @record = model.find(params[:id])
         end
 
-        desc 'Create an admin'
-        params do
-          use :recruiter_account_create
-        end
-        post do
-          admin_account = safe_params[:recruiter_account]
-          error!('', 409) unless account_manager.username_available? admin_account[:username]
-          present :recruiter_account, model.create!(admin_account), with: entity
-        end
-
-        params do
-          requires :username, type: String, presence: true
-        end
-        head :username_available do
-          error!('', 409) unless account_manager.username_available? params[:username]
-        end
-
+        desc 'Get a recruiter by id'
         get do
-          present :recruiter_accounts, model.all, with: entity
+          present :recruiter_account, @record, with: entity
         end
 
-        route_param :id, type: Integer, desc: 'admin id' do
-          before do
-            @record = model.find(params[:id])
-          end
+        desc 'Update a recruiter by id'
+        params do
+          use :recruiter_account_update
+        end
+        put do
+          @record.update! safe_params[:recruiter_account]
+          present :recruiter_account, @record, with: entity
+        end
 
-          desc 'Get an admin by id'
-          get do
-            present :recruiter_account, @record, with: entity
-          end
-
-          desc 'Update an admin by id'
-          params do
-            use :recruiter_account_update
-          end
-          put do
-            @record.update! safe_params[:recruiter_account]
-            present :recruiter_account, @record, with: entity
-          end
-
-          desc 'Delete an admin by id'
-          delete do
-            error!('Unautherized', 401) unless @record.deletable
-            present :recruiter_account, @record.destroy, with: entity
-          end
+        desc 'Delete a recruiter by id'
+        delete do
+          present :recruiter_account, @record.destroy, with: entity
         end
       end
     end

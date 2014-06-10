@@ -6,7 +6,12 @@ module API::V1::Helpers::Shared
 
   def authenticate_admin!
     error!('Unauthorized Access', 401) unless session[:user_id] and
-      session[:user_type] == Loginable::AdminRole
+      session[:user_type] == Account::AccountManager::AdminRole
+  end
+
+  def authenticate_recruiter!
+    error!('Unauthorized Access', 401) unless session[:user_id] and
+      session[:user_type] == Account::AccountManager::RecruiterRole
   end
 
   def account_manager

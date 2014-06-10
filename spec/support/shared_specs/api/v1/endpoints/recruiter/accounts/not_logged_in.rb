@@ -6,7 +6,7 @@ shared_examples '/api/v1/recruiter/accounts - not_logged_in' do
 
   context 'allowed' do
     it_behaves_like('controllers/accountable/login', Recruiter::Account, resource,
-      API::V1::Entities::Recruiter::Account, Loginable::AdminRole)
+      API::V1::Entities::Recruiter::Account, Account::AccountManager::RecruiterRole)
   end
 
   context 'forbidden' do
