@@ -2,14 +2,13 @@ class API::V1::Endpoints::Accountable < Grape::API
   include API::V1::Defaults
 
   namespace :accountable do
-    helpers API::V1::Params::Recruiter::Account
+    helpers API::V1::Params::Accountable
     helpers API::V1::Helpers::Shared
 
     desc 'logged in and non-logged in users'
     namespace do
       params do
         use :login
-        requires :role, type: String, values: Account::AccountManager::AllRoles
       end
       post :login do
         return if session[:user_type]
