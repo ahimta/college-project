@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 shared_examples 'controllers/accountable/login' do |model, resource, entity, role|
-  url = "/api/v1/#{resource}/login"
+  url = "/api/v1/accountable/login"
   name = resource.split('/').join('_')[0..-2]
 
   describe "POST #{url}" do
@@ -16,7 +16,7 @@ shared_examples 'controllers/accountable/login' do |model, resource, entity, rol
 
     context 'valid' do
       let(:params) {
-        {login: {username: user.username, password: user.password} }
+        {login: {username: user.username, password: user.password}, role: role }
       }
 
       it { action! }
@@ -34,7 +34,7 @@ shared_examples 'controllers/accountable/login' do |model, resource, entity, rol
 
       context 'wrong password' do
         let(:params) {
-          {login: {username: user.username, password: user.password.swapcase} }
+          {login: {username: user.username, password: user.password.swapcase}, role: role }
         }
 
         it { action! }
@@ -46,7 +46,7 @@ shared_examples 'controllers/accountable/login' do |model, resource, entity, rol
         after { expect(response.status).to eq(400) }
 
         context 'no user param' do
-          let(:params) { {} }
+          let(:params) { {login: {username: user.username, password: user.password} } }
 
           it { action! }
         end
