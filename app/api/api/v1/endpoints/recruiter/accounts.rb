@@ -15,42 +15,6 @@ class API::V1::Endpoints::Recruiter::Accounts < Grape::API
       end
     end
 
-    desc 'for all users and visitors'
-    namespace do
-      params do
-        use :login
-      end
-      post :login do
-        return if session[:user_type]
-
-        login = safe_params[:login]
-        user  = Account::AccountManager.login(username: login[:username],
-          password: login[:password], role: Account::AccountManager::RecruiterRole)
-
-        if user
-          session[:user_id] = user.id
-          session[:user_type] = Account::AccountManager::RecruiterRole
-
-          present :account, user, with: entity
-          present :role, Account::AccountManager::RecruiterRole
-        else
-          error!('401', 401)
-        end
-      end
-    end
-
-    desc 'for all recruiters'
-    namespace do
-      before do
-        authenticate_recruiter!
-      end
-
-      desc 'Log out a recruiter'
-      delete :logout do
-        account_manager.logout
-      end
-    end
-
     desc 'only for logged in non-deletable recruiters'
     namespace do
       before do
