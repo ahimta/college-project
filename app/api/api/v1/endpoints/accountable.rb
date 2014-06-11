@@ -5,6 +5,7 @@ class API::V1::Endpoints::Accountable < Grape::API
     helpers API::V1::Params::Recruiter::Account
     helpers API::V1::Helpers::Shared
 
+    desc 'logged in and non-logged in users'
     namespace do
       params do
         use :login
@@ -31,22 +32,29 @@ class API::V1::Endpoints::Accountable < Grape::API
       end
     end
 
-    namespace :my_account do
+    desc 'only logged in users'
+    namespace do
       before do
         authenticate!
       end
 
-      get do
-        present :account, current_user, with: account_manager.entity
-        present :role, account_manager.role
+      delete :logout do
+        account_manager.logout
       end
 
-      delete do
-        present :account, current_user.destroy, with: account_manager.entity
-        present :role, account_manager.role
+      namespace :my_account do
+        get do
+          present :account, current_user, with: account_manager.entity
+          present :role, account_manager.role
+        end
 
-        session.delete :user_type
-        session.delete :user_id
+        delete do
+          present :account, current_user.destroy, with: account_manager.entity
+          present :role, account_manager.role
+
+          session.delete :user_type
+          session.delete :user_id
+        end
       end
     end
   end
