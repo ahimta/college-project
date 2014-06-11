@@ -24,8 +24,8 @@ shared_examples 'controllers/accountable/login' do |model, resource, entity, rol
 
       after { expect(json_response['account']).to eq(expected_account) }
       after { expect(json_response['role']).to eq(role) }
-      after { expect(session[:user_type]).to eq(role) }
       after { expect(session[:user_id]).to eq(user.id) }
+      after { expect(session[:user_type]).to eq(role) }
       after { expect(response.status).to eq(201) }
     end
     context 'invalid' do
@@ -45,7 +45,7 @@ shared_examples 'controllers/accountable/login' do |model, resource, entity, rol
       context 'invalid params' do
         after { expect(response.status).to eq(400) }
 
-        context 'no user param' do
+        context 'no role param' do
           let(:params) { {login: {username: user.username, password: user.password} } }
 
           it { action! }
