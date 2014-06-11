@@ -19,14 +19,21 @@ shared_examples 'controllers/accountable/login' do |model, resource, entity, rol
         {login: {username: user.username, password: user.password}, role: role }
       }
 
-      it { action! }
-      it { action! }
-
       after { expect(json_response['account']).to eq(expected_account) }
       after { expect(json_response['role']).to eq(role) }
       after { expect(session[:user_id]).to eq(user.id) }
       after { expect(session[:user_type]).to eq(role) }
       after { expect(response.status).to eq(201) }
+
+      context 'not logged in' do
+        it { action! }
+      end
+
+      context 'logged in' do
+        before { action! }
+
+        it { action! }
+      end
     end
     context 'invalid' do
       after { expect(session[:user_type]).to be(nil) }
