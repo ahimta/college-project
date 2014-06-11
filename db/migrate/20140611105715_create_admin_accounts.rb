@@ -1,10 +1,10 @@
 class CreateAdminAccounts < ActiveRecord::Migration
   def change
     create_table :admin_accounts do |t|
-      t.string :full_name
-      t.string :username
-      t.string :password_digest
-      t.boolean :is_active
+      t.string :full_name, null: false
+      t.string :username, null: false
+      t.string :password_digest, null: false
+      t.boolean :is_active, null: false
 
       t.timestamps
     end

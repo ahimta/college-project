@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140605200608) do
+ActiveRecord::Schema.define(version: 20140611105715) do
+
+  create_table "admin_accounts", force: true do |t|
+    t.string   "full_name",       null: false
+    t.string   "username",        null: false
+    t.string   "password_digest", null: false
+    t.boolean  "is_active",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "admin_accounts", ["username"], name: "index_admin_accounts_on_username", unique: true
 
   create_table "applicant_job_requests", force: true do |t|
     t.string   "specialization", null: false
