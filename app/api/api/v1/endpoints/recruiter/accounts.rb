@@ -15,7 +15,7 @@ class API::V1::Endpoints::Recruiter::Accounts < Grape::API
       end
     end
 
-    desc 'only for logged in non-deletable recruiters'
+    desc 'only for logged in admins'
     namespace do
       before do
         authenticate_admin!
