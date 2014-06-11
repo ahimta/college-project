@@ -1,4 +1,4 @@
-module Loginable
+module Account::Accountable
   extend ActiveSupport::Concern
 
   included do
