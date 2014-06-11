@@ -17,12 +17,12 @@ gem 'factory_girl_rails', '~> 4.4.1'
 gem 'rack-cors', require: 'rack/cors'
 
 group :development, :test do
-  gem 'rspec-rails', '~> 2.14.2'
+  gem 'rspec-rails', '~> 3.0.0'
   gem 'sqlite3', '~> 1.3.9'
 end
 
 group :development do
-  gem 'guard-rspec', '~> 4.2.8', require: false
+  gem 'guard-rspec', '~> 4.2.0', require: false
   gem 'guard-bundler', '~> 2.0.0', require: false
   gem 'railroady', '~> 1.1.1'
   gem 'spring'
