@@ -4,7 +4,7 @@ class CreateAdminAccounts < ActiveRecord::Migration
       t.string :full_name, null: false
       t.string :username, null: false
       t.string :password_digest, null: false
-      t.boolean :is_active, null: false
+      t.boolean :is_active, default: true
 
       t.timestamps
     end

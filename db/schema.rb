@@ -14,10 +14,10 @@
 ActiveRecord::Schema.define(version: 20140611105715) do
 
   create_table "admin_accounts", force: true do |t|
-    t.string   "full_name",       null: false
-    t.string   "username",        null: false
-    t.string   "password_digest", null: false
-    t.boolean  "is_active",       null: false
+    t.string   "full_name",                      null: false
+    t.string   "username",                       null: false
+    t.string   "password_digest",                null: false
+    t.boolean  "is_active",       default: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
