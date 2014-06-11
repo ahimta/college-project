@@ -4,8 +4,11 @@ describe API::V1::Endpoints::Recruiter::Accounts do
 
   resource = 'recruiter/accounts'
   url = "/api/v1/#{resource}"
+  role = Account::AccountManager::RecruiterRole
+  model = Recruiter::Account
+  entity = API::V1::Entities::Recruiter::Account
 
-  args = [Recruiter::Account, API::V1::Entities::Recruiter::Account, resource]
+  args = [model, entity, resource]
   create_factories = {
     valid: [
       :recruiter_account_with_correct_password_confirmation,
@@ -30,9 +33,11 @@ describe API::V1::Endpoints::Recruiter::Accounts do
     # WARNING: current_user name is not arbitrary, please don't change :-)
     let!(:current_user) { FactoryGirl.create :recruiter_account }
 
-    let(:_login) { {login: {username: current_user.username, password: current_user.password}} }
+    let(:_login) {
+      {login: {username: current_user.username, password: current_user.password}, role: role}
+    }
 
-    before { post "#{url}/login", _login }
+    before { post "/api/v1/accountable/login", _login }
 
     it_behaves_like("#{url} - logged_in", args, create_factories,
       update_factories)
