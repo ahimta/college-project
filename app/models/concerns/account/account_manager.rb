@@ -15,9 +15,12 @@ class Account::AccountManager
 
   def initialize(session)
     case session[:user_type]
-    when Account::AccountManager::RecruiterRole
+    when RecruiterRole
       @entity = API::V1::Entities::Recruiter::Account
-      @model = Recruiter::Account
+      @model  = Recruiter::Account
+    when AdminRole
+      @entity = API::V1::Entities::Admin::Account
+      @model  = Admin::Account
     else
       raise ArgumentError
     end

@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-shared_examples '/api/v1/recruiter/accounts - not_logged_in' do
+shared_examples '/api/v1/admin/accounts - not_logged_in' do
 
-  resource = 'recruiter/accounts'
+  resource = 'admin/accounts'
   url = "/api/v1/#{resource}"
 
-  role = Account::AccountManager::RecruiterRole
+  role = Account::AccountManager::AdminRole
 
   context 'allowed' do
-    it_behaves_like('controllers/accountable/login', Recruiter::Account, resource,
-      API::V1::Entities::Recruiter::Account, role)
+    it_behaves_like('controllers/accountable/login', Admin::Account, resource,
+      API::V1::Entities::Admin::Account, role)
   end
 
   context 'forbidden' do
@@ -35,11 +35,11 @@ shared_examples '/api/v1/recruiter/accounts - not_logged_in' do
       it { delete '/api/v1/accountable/logout' }
     end
     pending 'username_available' do
-      it { head "/api/v1/accountable//username_available?username=hi&role=#{role}" }
+      it { head "/api/v1/accountable/username_available?username=hi&role=#{role}" }
     end
     context 'my_account' do
-      it { get '/api/v1/accountable/my_account' }
-      it { delete '/api/v1/accountable/my_account' }
+      it { get "/api/v1/accountable/my_account" }
+      it { delete "/api/v1/accountable/my_account" }
     end
   end
 end
