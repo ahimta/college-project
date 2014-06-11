@@ -24,7 +24,8 @@ class API::V1::Endpoints::Recruiter::Accounts < Grape::API
         return if session[:user_type]
 
         login = safe_params[:login]
-        user  = model.login(login[:username], login[:password])
+        user  = Account::AccountManager.login(username: login[:username],
+          password: login[:password], role: Account::AccountManager::RecruiterRole)
 
         if user
           session[:user_id] = user.id
