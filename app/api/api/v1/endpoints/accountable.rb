@@ -23,7 +23,7 @@ class API::V1::Endpoints::Accountable < Grape::API
           session[:user_id] = user.id
           session[:user_type] = role
 
-          present :account, user, with: entity
+          present :account, user, with: account_manager.entity
           present :role, role
         else
           error!('401', 401)
