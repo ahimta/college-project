@@ -7,6 +7,12 @@ class Account::AccountManager
 
   AllRoles = [RecruiterRole, StudentRole, TeacherRole, AdminRole]
 
+  def self.login(username:, password:, role:)
+    raise ArgumentError unless AllRoles.include? role
+
+    self.new(user_type: role).login(username, password)
+  end
+
   def initialize(session)
     case session[:user_type]
     when Account::AccountManager::RecruiterRole

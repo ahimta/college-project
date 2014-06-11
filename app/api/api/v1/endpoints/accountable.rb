@@ -14,14 +14,17 @@ class API::V1::Endpoints::Accountable < Grape::API
         return if session[:user_type]
 
         login = safe_params[:login]
-        user  = model.login(login[:username], login[:password])
+        role  = safe_params[:role]
+
+        user  = Account::AccountManager.login(username: login[:username],
+          password: login[:password], role: role)
 
         if user
           session[:user_id] = user.id
-          session[:user_type] = Account::AccountManager::RecruiterRole
+          session[:user_type] = role
 
           present :account, user, with: entity
-          present :role, Account::AccountManager::RecruiterRole
+          present :role, role
         else
           error!('401', 401)
         end
