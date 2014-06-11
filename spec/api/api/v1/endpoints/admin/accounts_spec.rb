@@ -28,25 +28,30 @@ RSpec.describe API::V1::Endpoints::Admin::Accounts do
     valid: (create_factories[:valid] + diff_factories)
   }
 
-  # context 'logged in' do
-  #   let(:_login) {
-  #     {login: {username: current_user.username, password: current_user.password}, role: role}
-  #   }
+  context 'logged in' do
+    let(:_login) {
+      {login: {username: current_user.username, password: current_user.password}, role: role}
+    }
 
-  #   before { post "/api/v1/accountable/login", _login }
+    before { post "/api/v1/accountable/login", _login }
 
-  #   pending 'as an admin'
+    context 'as an admin' do
+      let!(:current_user) { FactoryGirl.create :admin_account }
 
-  #   context 'as a recruiter' do
-  #     # WARNING: current_user name is not arbitrary, please don't change :-)
-  #     let!(:current_user) { FactoryGirl.create :admin_account }
+      let(:role) { Account::AccountManager::AdminRole }
 
-  #     let(:role) { Account::AccountManager::RecruiterRole }
+      it_behaves_like "#{url} - logged in as an admin", args, create_factories, update_factories
+    end
 
-  #     it_behaves_like("#{url} - logged_in as a recruiter", args, create_factories,
-  #       update_factories)
-  #   end
-  # end
+    context 'as a recruiter' do
+      # WARNING: current_user name is not arbitrary, please don't change :-)
+      let!(:current_user) { FactoryGirl.create :recruiter_account }
+
+      let(:role) { Account::AccountManager::RecruiterRole }
+
+      it_behaves_like "#{url} - logged in as a recruiter", args, create_factories, update_factories
+    end
+  end
 
   context 'not logged in' do
     it_behaves_like "#{url} - not_logged_in"

@@ -13,6 +13,10 @@ class Account::AccountManager
     self.new(user_type: role).login(username, password)
   end
 
+  def self.username_available?(username:, role:)
+    self.new(user_type: role).username_available? username
+  end
+
   def initialize(session)
     case session[:user_type]
     when RecruiterRole

@@ -37,6 +37,15 @@ class API::V1::Endpoints::Accountable < Grape::API
         authenticate!
       end
 
+      params do
+        requires :username, type: String, presence: true
+        requires :role, type: String, values: Account::AccountManager::AllRoles
+      end
+      head :username_available do
+        error!('', 409) unless Account::AccountManager.username_available?(
+          username: params[:username], role: safe_params[:role])
+      end
+
       delete :logout do
         account_manager.logout
       end

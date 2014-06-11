@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-shared_examples 'controllers/accountable/username_available' do |resource|
+shared_examples 'controllers/accountable/username_available' do |resource, role|
 
   factory = resource.split('/').join('_')[0..-2]
-  url = "/api/v1/#{resource}"
+  url = '/api/v1/accountable/username_available'
 
   describe "HEAD #{url}/username_available" do
-    let(:action!) { head "#{url}/username_available?username=#{username}" }
+    let(:action!) { head "#{url}?username=#{username}&role=#{role}" }
     let(:username) { 'hi' }
 
     context 'available' do
