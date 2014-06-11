@@ -6,9 +6,10 @@ shared_examples 'controllers/update' do |model, entity, resource, factories|
   url = "/api/v1/#{resource}"
 
   describe "PUT #{url}/:id" do
-    let(:action) { put "#{url}/#{record.id}", params }
     let!(:record) { FactoryGirl.create name }
     let!(:count) { model.count }
+
+    let(:action!) { put "#{url}/#{record.id}", params }
 
     before { expect(model.count).to eq(count) }
     after { expect(model.count).to eq(count) }
@@ -25,9 +26,10 @@ shared_examples 'controllers/update' do |model, entity, resource, factories|
       factories[:valid].each do |factory|
         let(:params) { generate_params(factory, name) }
 
-        it { action }
+        it { action! }
 
-        after { expect(model.first.attributes.to_s).to_not eq(record.attributes.to_s) }
+        # order matters record.attributes first then record.reload.attributes
+        after { expect(record.attributes.to_s).to_not eq(record.reload.attributes.to_s) }
         after { expect(json_response[name]).to eq(expected_record) }
         after { expect(response.status).to eq(200) }
       end
@@ -37,7 +39,7 @@ shared_examples 'controllers/update' do |model, entity, resource, factories|
       factories[:invalid].each do |factory|
         let(:params) { generate_params(factory, name) }
 
-        it { action }
+        it { action! }
 
         after { expect(model.first.attributes.to_s).to eq(record.attributes.to_s) }
         after { expect(response.status).to eq(400) }

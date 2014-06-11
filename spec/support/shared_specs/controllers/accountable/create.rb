@@ -4,7 +4,6 @@ shared_examples 'controllers/accountable/create' do |model, resource|
 
   url = "/api/v1/#{resource}"
   factory = resource.split('/').join('_')[0..-2]
-  model = Recruiter::Account
 
   describe "POST #{url}" do
     context 'existing username' do
@@ -19,7 +18,6 @@ shared_examples 'controllers/accountable/create' do |model, resource|
       before { expect(model.count).to eq(count) }
 
       it { post url, params }
-
 
       after { expect(response.status).to eq(409) }
       after { expect(model.count).to eq(count) }

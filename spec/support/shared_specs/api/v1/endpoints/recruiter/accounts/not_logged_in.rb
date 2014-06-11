@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 shared_examples '/api/v1/recruiter/accounts - not_logged_in' do
+
   resource = 'recruiter/accounts'
   url = "/api/v1/#{resource}"
 

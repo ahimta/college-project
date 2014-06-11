@@ -6,9 +6,10 @@ shared_examples 'controllers/destroy' do |model, entity, resource|
   url = "/api/v1/#{resource}"
 
   describe "DELETE #{url}/:id" do
-    let(:expected_record) { serialized_record(entity, record) }
     let!(:record) { FactoryGirl.create name }
     let!(:count) { model.count }
+
+    let(:expected_record) { serialized_record(entity, record) }
 
     before { expect(model.count).to eq(count) }
 
@@ -17,6 +18,7 @@ shared_examples 'controllers/destroy' do |model, entity, resource|
 
       after { expect(json_response[name]).to eq(expected_record) }
       after { expect(model.count).to eq(count - 1) }
+      after { expect(response.status).to eq(200) }
     end
 
     context 'does not exist' do

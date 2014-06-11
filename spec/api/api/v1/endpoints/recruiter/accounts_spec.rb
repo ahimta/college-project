@@ -4,7 +4,6 @@ describe API::V1::Endpoints::Recruiter::Accounts do
 
   resource = 'recruiter/accounts'
   url = "/api/v1/#{resource}"
-  role = Account::AccountManager::RecruiterRole
   model = Recruiter::Account
   entity = API::V1::Entities::Recruiter::Account
 
@@ -30,17 +29,23 @@ describe API::V1::Endpoints::Recruiter::Accounts do
   }
 
   context 'logged in' do
-    # WARNING: current_user name is not arbitrary, please don't change :-)
-    let!(:current_user) { FactoryGirl.create :recruiter_account }
-
     let(:_login) {
       {login: {username: current_user.username, password: current_user.password}, role: role}
     }
 
     before { post "/api/v1/accountable/login", _login }
 
-    it_behaves_like("#{url} - logged_in", args, create_factories,
-      update_factories)
+    pending 'as an admin'
+
+    context 'as a recruiter' do
+      # WARNING: current_user name is not arbitrary, please don't change :-)
+      let!(:current_user) { FactoryGirl.create :recruiter_account }
+
+      let(:role) { Account::AccountManager::RecruiterRole }
+
+      it_behaves_like("#{url} - logged_in as a recruiter", args, create_factories,
+        update_factories)
+    end
   end
 
   context 'not logged in' do

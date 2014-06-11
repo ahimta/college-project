@@ -7,34 +7,35 @@ shared_examples 'controllers/index' do |model, entity, resource|
   collection = resource.split('/').join('_')
 
   describe "GET #{url}" do
-    let(:action) { get url }
+    let(:action!) { get url }
+
+    after { expect(response.status).to eq(200) }
 
     context 'empty' do
-      let!(:count) { model.count }
+      let!(:_) { model.destroy_all }
 
-      before { expect(model.count).to eq(count) }
+      before { expect(model.count).to be_zero }
 
-      it { action }
+      it { action! }
 
-      after { expect(json_response[collection]).to eq(serialized_record(entity, model.all)) }
-      after { expect(json_response[collection].length).to eq(count) }
-      after { expect(response.status).to eq(200) }
-      after { expect(model.count).to eq(count) }
+      after { expect(json_response[collection].length).to be_zero }
+      after { expect(json_response[collection]).to eq([]) }
+      after { expect(model.count).to be_zero }
     end
 
     context 'not empty' do
-      let(:expected_records) { serialized_record(entity, model.order('id desc')) }
       let!(:_) { FactoryGirl.create_list name, 3 }
       let!(:_) { FactoryGirl.create name }
       let!(:count) { model.count }
 
+     let(:expected_records) { serialized_record(entity, model.order('id desc')) }
+
       before { expect(model.count).to eq(count) }
 
-      it { action }
+      it { action! }
 
-      after { expect(json_response[collection].length).to eq(count) }
       after { expect(json_response[collection]).to eq(expected_records) }
-      after { expect(response.status).to eq(200) }
+      after { expect(json_response[collection].length).to eq(count) }
       after { expect(model.count).to eq(count) }
     end
   end

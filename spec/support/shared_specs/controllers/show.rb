@@ -7,8 +7,9 @@ shared_examples 'controllers/show' do |model, entity, resource|
 
   describe "GET #{url}/:id" do
     context 'exists' do
-      let(:expected_record) { serialized_record(entity, record) }
       let!(:record) { FactoryGirl.create name }
+
+      let(:expected_record) { serialized_record(entity, record) }
 
       it { get "#{url}/#{record.id}" }
 

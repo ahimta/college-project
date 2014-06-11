@@ -7,7 +7,7 @@ shared_examples 'controllers/create' do |model, entity, resource, factories|
 
   describe "POST #{url}" do
     let!(:old_count) { model.count }
-    let(:action) { post url, params }
+    let(:action!) { post url, params }
 
     before { expect(model.count).to eq(old_count) }
 
@@ -17,11 +17,11 @@ shared_examples 'controllers/create' do |model, entity, resource, factories|
       factories[:valid].each do |factory|
         let(:params) { generate_params(factory, name) }
 
-        it { action }
+        it { action! }
 
         after { expect(json_response[name]).to eq(expected_record) }
-        after { expect(response.status).to eq(201) }
         after { expect(model.count).to eq(old_count + 1) }
+        after { expect(response.status).to eq(201) }
       end
     end
 
@@ -29,10 +29,10 @@ shared_examples 'controllers/create' do |model, entity, resource, factories|
       factories[:invalid].each do |factory|
         let(:params) { generate_params(factory, name) }
 
-        it { action }
+        it { action! }
 
-        after { expect(response.status).to eq(400) }
         after { expect(model.count).to eq(old_count) }
+        after { expect(response.status).to eq(400) }
       end
     end
   end
