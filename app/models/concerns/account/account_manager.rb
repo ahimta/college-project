@@ -1,9 +1,11 @@
 class Account::AccountManager
 
-  RecruiterRole = 0
-  StudentRole = 1
-  TeacherRole = 2
-  AdminRole = 3
+  RecruiterRole = 'recruiter'
+  StudentRole = 'student'
+  TeacherRole = 'teacher'
+  AdminRole = 'admin'
+
+  AllRoles = [RecruiterRole, StudentRole, TeacherRole, AdminRole]
 
   def initialize(session)
     case session[:user_type]
