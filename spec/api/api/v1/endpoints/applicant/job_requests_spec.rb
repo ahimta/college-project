@@ -12,13 +12,14 @@ describe API::V1::Endpoints::Applicant::JobRequests, type: :request do
 
   context 'logged in' do
     let(:_login) {
-      {login: {username: _account.username, password: _account.password}, role: role}
+      {login: {username: current_user.username, password: current_user.password}, role: role}
     }
 
     before { post '/api/v1/accountable/login', _login }
 
     context 'as an admin' do
-      let!(:_account) { FactoryGirl.create :admin_account }
+      # WARNING: current_user name is not arbitrary, please don't change :-)
+      let!(:current_user) { FactoryGirl.create :admin_account }
 
       let(:role) { Account::AccountManager::AdminRole }
 
@@ -26,7 +27,8 @@ describe API::V1::Endpoints::Applicant::JobRequests, type: :request do
     end
 
     context 'as a recruiter' do
-      let!(:_account) { FactoryGirl.create :recruiter_account }
+      # WARNING: current_user name is not arbitrary, please don't change :-)
+      let!(:current_user) { FactoryGirl.create :recruiter_account }
 
       let(:role) { Account::AccountManager::RecruiterRole }
 
