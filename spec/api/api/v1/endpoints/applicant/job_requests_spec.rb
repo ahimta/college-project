@@ -17,7 +17,14 @@ describe API::V1::Endpoints::Applicant::JobRequests do
 
     before { post '/api/v1/accountable/login', _login }
 
-    pending 'as an admin'
+    context 'as an admin' do
+      let!(:_account) { FactoryGirl.create :admin_account }
+
+      let(:role) { Account::AccountManager::AdminRole }
+
+      it_behaves_like "#{url} - logged_in as an admin", args, factories
+    end
+
     context 'as a recruiter' do
       let!(:_account) { FactoryGirl.create :recruiter_account }
 
