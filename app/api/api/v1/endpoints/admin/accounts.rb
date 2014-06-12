@@ -35,29 +35,28 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
     end
 
     route_param :id, type: Integer do
-      before do
-        @record = model.find params[:id]
-      end
+      namespace do
+        before do
+          @record = model.find params[:id]
+        end
 
-      get do
-        present :admin_account, @record, with: entity
+        get do
+          present :admin_account, @record, with: entity
+        end
       end
 
       namespace do
         before do
-          error!('', 401) unless current_user.id == @record.id
+          error!('', 401)
         end
 
         params do
           use :admin_account_update
         end
         put do
-          @record.update! safe_params[:admin_account]
-          present :admin_account, @record, with: entity
         end
 
         delete do
-          error!('', 401)
         end
       end
     end

@@ -2,6 +2,7 @@ require 'spec_helper'
 
 shared_examples '/api/v1/admin/accounts - not_logged_in' do
 
+  accountable_url = '/api/v1/accountable'
   resource = 'admin/accounts'
   url = "/api/v1/#{resource}"
 
@@ -32,14 +33,14 @@ shared_examples '/api/v1/admin/accounts - not_logged_in' do
     end
 
     context 'logout' do
-      it { delete '/api/v1/accountable/logout' }
+      it { delete "#{accountable_url}/logout" }
     end
-    pending 'username_available' do
-      it { head "/api/v1/accountable/username_available?username=hi&role=#{role}" }
+    context 'username_available' do
+      it { head "#{accountable_url}/username_available?username=hi&role=#{role}" }
     end
     context 'my_account' do
-      it { get "/api/v1/accountable/my_account" }
-      it { delete "/api/v1/accountable/my_account" }
+      it { get "#{accountable_url}/my_account" }
+      it { delete "#{accountable_url}/my_account" }
     end
   end
 end
