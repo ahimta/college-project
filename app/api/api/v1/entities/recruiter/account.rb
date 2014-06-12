@@ -1,3 +1,4 @@
-class API::V1::Entities::Recruiter::Account < API::V1::Entities::Base
-  expose :full_name, :username, :is_active
+module API::V1::Entities
+  class Recruiter::Account < Accountable
+  end
 end
