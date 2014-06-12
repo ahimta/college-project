@@ -2,14 +2,16 @@ require 'spec_helper'
 
 shared_examples '/api/v1/recruiter/accounts - not_logged_in' do
 
+  accountable_url = '/api/v1/accountable'
   resource = 'recruiter/accounts'
   url = "/api/v1/#{resource}"
 
-  role = Account::AccountManager::RecruiterRole
+  recruiter_role = Account::AccountManager::RecruiterRole
+  admin_role = Account::AccountManager::AdminRole
 
   context 'allowed' do
     it_behaves_like('controllers/accountable/login', Recruiter::Account, resource,
-      API::V1::Entities::Recruiter::Account, role)
+      API::V1::Entities::Recruiter::Account, recruiter_role)
   end
 
   context 'forbidden' do
@@ -32,14 +34,15 @@ shared_examples '/api/v1/recruiter/accounts - not_logged_in' do
     end
 
     context 'logout' do
-      it { delete '/api/v1/accountable/logout' }
+      it { delete "#{accountable_url}/logout" }
     end
-    pending 'username_available' do
-      it { head "/api/v1/accountable//username_available?username=hi&role=#{role}" }
+    context 'username_available' do
+      it { head "#{accountable_url}/username_available?username=hi&role=#{recruiter_role}" }
+      it { head "#{accountable_url}/username_available?username=hi&role=#{admin_role}" }
     end
     context 'my_account' do
-      it { get '/api/v1/accountable/my_account' }
-      it { delete '/api/v1/accountable/my_account' }
+      it { get "#{accountable_url}/my_account" }
+      it { delete "#{accountable_url}/my_account" }
     end
   end
 end
