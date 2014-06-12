@@ -22,7 +22,7 @@ describe API::V1::Endpoints::Applicant::JobRequests do
 
       let(:role) { Account::AccountManager::AdminRole }
 
-      it_behaves_like "#{url} - logged_in as an admin", args, factories
+      it_behaves_like "#{url} - logged in as an admin", args, factories
     end
 
     context 'as a recruiter' do

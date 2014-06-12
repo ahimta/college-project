@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-shared_examples '/api/v1/applicant/job_requests - logged_in as an admin' do |args, factories|
+shared_examples '/api/v1/applicant/job_requests - logged in as an admin' do |args, factories|
 
   url = '/api/v1/applicant/job_requests'
 

@@ -2,9 +2,9 @@
 
 FactoryGirl.define do
   factory :recruiter_account, class: 'Recruiter::Account' do
-    sequence(:full_name) { |n| "full_name#{n}" }
-    sequence(:username)  { |n| "username#{n}" }
-    sequence(:password)  { |n| "password#{n}" }
+    sequence(:full_name) { |n| "recruiter_full_name#{n}" }
+    sequence(:username)  { |n| "recruiter_username#{n}" }
+    sequence(:password)  { |n| "recruiter_password#{n}" }
 
     factory :recruiter_account_with_correct_password_confirmation do
       password_confirmation { password }
