@@ -44,13 +44,13 @@ class Account::AccountManager
     @current_user ||= @model.find @session[:user_id] if @session[:user_id]
   end
 
-  def login(username, password)
-    @login ||= @model.where(username: username).first.try(:authenticate, password)
-  end
-
   def logout
     @session.delete :user_type
     @session.delete :user_id
+  end
+
+  def login(username, password)
+    @login ||= @model.where(username: username).first.try(:authenticate, password)
   end
 
   def username_available?(username)

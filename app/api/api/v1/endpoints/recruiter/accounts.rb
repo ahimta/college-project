@@ -27,7 +27,10 @@ class API::V1::Endpoints::Recruiter::Accounts < Grape::API
       end
       post do
         recruiter_account = safe_params[:recruiter_account]
-        error!('', 409) unless account_manager.username_available? recruiter_account[:username]
+
+        error!('', 409) unless Account::AccountManager.username_available?(
+          username: recruiter_account[:username], role: Account::AccountManager::RecruiterRole)
+
         present :recruiter_account, model.create!(recruiter_account), with: entity
       end
 
@@ -35,7 +38,8 @@ class API::V1::Endpoints::Recruiter::Accounts < Grape::API
         requires :username, type: String, presence: true
       end
       head :username_available do
-        error!('', 409) unless account_manager.username_available? params[:username]
+        error!('', 409) unless Account::AccountManager.username_available?(
+          username: params[:username], role: Account::AccountManager::RecruiterRole)
       end
 
       get do

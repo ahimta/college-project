@@ -35,7 +35,15 @@ describe API::V1::Endpoints::Recruiter::Accounts do
 
     before { post "/api/v1/accountable/login", _login }
 
-    pending 'as an admin'
+    context 'as an admin' do
+      # WARNING: current_user name is not arbitrary, please don't change :-)
+      let!(:current_user) { FactoryGirl.create :admin_account }
+
+      let(:role) { Account::AccountManager::AdminRole }
+
+      it_behaves_like("#{url} - logged in as an admin", args, create_factories,
+        update_factories)
+    end
 
     context 'as a recruiter' do
       # WARNING: current_user name is not arbitrary, please don't change :-)

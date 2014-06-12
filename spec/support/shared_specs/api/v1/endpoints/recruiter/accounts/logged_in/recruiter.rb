@@ -13,7 +13,6 @@ shared_examples '/api/v1/recruiter/accounts - logged_in as a recruiter' do |args
   end
 
   context 'not allowed' do
-    let!(:account) { FactoryGirl.create :recruiter_account }
     let!(:count) { Recruiter::Account.count }
 
     before { expect(Recruiter::Account.count).to eq(count) }
