@@ -3,6 +3,7 @@ class API::V1::Endpoints::Recruiter::Accounts < Grape::API
 
   resource 'recruiter/accounts' do
     helpers API::V1::Params::Recruiter::Account
+    helpers API::V1::Params::Accountable
     helpers API::V1::Helpers::Shared
     helpers API::V1::Params::Shared
     helpers do
@@ -21,7 +22,9 @@ class API::V1::Endpoints::Recruiter::Accounts < Grape::API
       end
 
       params do
-        use :recruiter_account_update
+        requires :recruiter_account, type: Hash do
+          use :accountable_update
+        end
       end
       put :my_account do
         account  = safe_params[:recruiter_account]
@@ -46,7 +49,9 @@ class API::V1::Endpoints::Recruiter::Accounts < Grape::API
 
       desc 'Create a recruiter'
       params do
-        use :recruiter_account_create
+        requires :recruiter_account, type: Hash do
+          use :accountable_create
+        end
       end
       post do
         recruiter_account = safe_params[:recruiter_account]
@@ -81,7 +86,9 @@ class API::V1::Endpoints::Recruiter::Accounts < Grape::API
 
         desc 'Update a recruiter by id'
         params do
-          use :recruiter_account_update
+          requires :recruiter_account, type: Hash do
+            use :accountable_update
+          end
         end
         put do
           @record.update! safe_params[:recruiter_account]

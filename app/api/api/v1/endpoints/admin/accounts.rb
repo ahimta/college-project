@@ -3,6 +3,7 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
 
   resource 'admin/accounts' do
     helpers API::V1::Params::Admin::Account
+    helpers API::V1::Params::Accountable
     helpers API::V1::Helpers::Shared
     helpers API::V1::Params::Shared
     helpers do
@@ -20,7 +21,9 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
     end
 
     params do
-      use :admin_account_update
+      requires :admin_account, type: Hash do
+        use :accountable_update
+      end
     end
     put :my_account do
       account  = safe_params[:admin_account]
@@ -41,7 +44,9 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
     end
 
     params do
-      use :admin_account_create
+      requires :admin_account, type: Hash do
+        use :accountable_create
+      end
     end
     post do
       admin_account = safe_params[:admin_account]
@@ -68,7 +73,9 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
         end
 
         params do
-          use :admin_account_update
+          requires :admin_account, type: Hash do
+            use :accountable_update
+          end
         end
         put do
         end
