@@ -20,8 +20,7 @@ shared_examples '/api/v1/admin/accounts - logged in as an admin' do |args, creat
       Account::AccountManager::RecruiterRole)
 
     it_behaves_like 'controllers/accountable/create', model, resource
-    it_behaves_like('controllers/accountable/my_account', model, resource,
-      entity, role)
+    it_behaves_like 'controllers/accountable/my_account', model, resource, entity, role
   end
 
   context 'not allowed' do

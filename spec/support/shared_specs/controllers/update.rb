@@ -31,7 +31,6 @@ shared_examples 'controllers/update' do |model, entity, resource, factories|
 
         it { action! }
 
-        # order matters record.attributes first then record.reload.attributes
         after { expect(old_record.attributes.to_s).to_not eq(record.reload.attributes.to_s) }
         after { expect(json_response[name]).to eq(expected_record) }
         after { expect(response.status).to eq(200) }
@@ -44,7 +43,7 @@ shared_examples 'controllers/update' do |model, entity, resource, factories|
 
         it { action! }
 
-        after { expect(record.attributes.to_s).to eq(record.reload.attributes.to_s) }
+        after { expect(old_record.attributes.to_s).to eq(record.reload.attributes.to_s) }
         after { expect(response.status).to eq(400) }
       end
     end

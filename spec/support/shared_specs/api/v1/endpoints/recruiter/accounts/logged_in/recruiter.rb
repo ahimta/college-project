@@ -5,11 +5,13 @@ shared_examples '/api/v1/recruiter/accounts - logged_in as a recruiter' do |args
   resource = 'recruiter/accounts'
   url = '/api/v1/recruiter/accounts'
   model = Recruiter::Account
+  entity = API::V1::Entities::Recruiter::Account
+  role = Account::AccountManager::RecruiterRole
 
   context 'allowed' do
     it_behaves_like 'controllers/accountable/logout', model, resource
-    it_behaves_like('controllers/accountable/my_account', Recruiter::Account, resource,
-      API::V1::Entities::Recruiter::Account, Account::AccountManager::RecruiterRole)
+    it_behaves_like('controllers/accountable/my_account', model, resource,
+      entity, role)
   end
 
   context 'not allowed' do
