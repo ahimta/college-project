@@ -19,6 +19,23 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
       authenticate_admin!
     end
 
+    params do
+      use :admin_account_update
+    end
+    put :my_account do
+      account  = safe_params[:admin_account]
+      username = account[:username]
+
+      unless username == current_user.username or account_manager.username_available? username
+        error('', 409)
+      else
+        current_user.update! account
+
+        present :account, account, with: entity
+        present :role, Account::AccountManager::AdminRole
+      end
+    end
+
     get do
       present :admin_accounts, model.all, with: entity
     end

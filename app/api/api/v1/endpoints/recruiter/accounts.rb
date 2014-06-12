@@ -15,6 +15,29 @@ class API::V1::Endpoints::Recruiter::Accounts < Grape::API
       end
     end
 
+    namespace do
+      before do
+        authenticate_recruiter!
+      end
+
+      params do
+        use :recruiter_account_update
+      end
+      put :my_account do
+        account  = safe_params[:recruiter_account]
+        username = account[:username]
+
+        unless username == current_user.username or account_manager.username_available? username
+          error('', 409)
+        else
+          current_user.update! account
+
+          present :account, account, with: entity
+          present :role, Account::AccountManager::AdminRole
+        end
+      end
+    end
+
     desc 'only for logged in admins'
     namespace do
       before do
