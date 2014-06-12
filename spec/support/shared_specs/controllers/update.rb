@@ -6,8 +6,11 @@ shared_examples 'controllers/update' do |model, entity, resource, factories|
   url = "/api/v1/#{resource}"
 
   describe "PUT #{url}/:id" do
-    let!(:record) { FactoryGirl.create name }
+    let!(:id) { FactoryGirl.create(name).id }
     let!(:count) { model.count }
+    let!(:old_record) { model.find id }
+
+    let(:record) { model.find id }
 
     let(:action!) { put "#{url}/#{record.id}", params }
 
@@ -21,7 +24,7 @@ shared_examples 'controllers/update' do |model, entity, resource, factories|
     end
 
     context 'valid' do
-      let(:expected_record) { serialized_record(entity, model.first) }
+      let(:expected_record) { serialized_record(entity, record.reload) }
 
       factories[:valid].each do |factory|
         let(:params) { generate_params(factory, name) }
@@ -29,7 +32,7 @@ shared_examples 'controllers/update' do |model, entity, resource, factories|
         it { action! }
 
         # order matters record.attributes first then record.reload.attributes
-        # after { expect(record.attributes.to_s).to_not eq(record.reload.attributes.to_s) }
+        after { expect(old_record.attributes.to_s).to_not eq(record.reload.attributes.to_s) }
         after { expect(json_response[name]).to eq(expected_record) }
         after { expect(response.status).to eq(200) }
       end
@@ -41,7 +44,7 @@ shared_examples 'controllers/update' do |model, entity, resource, factories|
 
         it { action! }
 
-        after { expect(model.first.attributes.to_s).to eq(record.attributes.to_s) }
+        after { expect(record.attributes.to_s).to eq(record.reload.attributes.to_s) }
         after { expect(response.status).to eq(400) }
       end
     end
