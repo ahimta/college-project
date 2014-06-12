@@ -54,13 +54,6 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
-
-  # grape
-  config.include RSpec::Rails::RequestExampleGroup, type: :request, example_group: {
-    file_path: /spec\/api/
-  }
-
-
   # I added
   config.include MyHelpers
 end

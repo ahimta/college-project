@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe API::V1::Endpoints::Recruiter::Accounts do
+describe API::V1::Endpoints::Recruiter::Accounts, type: :request do
 
   resource = 'recruiter/accounts'
   url = "/api/v1/#{resource}"

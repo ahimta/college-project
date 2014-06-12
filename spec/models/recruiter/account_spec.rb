@@ -1,4 +1,4 @@
 require 'spec_helper'
 
-describe Recruiter::Account do
+RSpec.describe Recruiter::Account, type: :model do
 end

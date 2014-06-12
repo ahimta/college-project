@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe API::V1::Endpoints::Applicant::JobRequests do
+describe API::V1::Endpoints::Applicant::JobRequests, type: :request do
 
   resource = 'applicant/job_requests'
   url = "/api/v1/#{resource}"

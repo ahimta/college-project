@@ -1,4 +1,4 @@
 require 'spec_helper'
 
-describe Applicant::JobRequest do
+RSpec.describe Applicant::JobRequest, type: :model do
 end

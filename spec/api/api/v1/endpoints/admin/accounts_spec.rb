@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe API::V1::Endpoints::Admin::Accounts do
+RSpec.describe API::V1::Endpoints::Admin::Accounts, type: :request do
 
   model = Admin::Account
   resource = 'admin/accounts'
