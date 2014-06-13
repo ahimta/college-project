@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-shared_examples 'controllers/accountable/my_account' do |model, resource, entity, role, factories|
+shared_examples 'controllers/accountable/my_account' do |model, resource, entity, role|
 
   name = resource[0..-2].split('/').join '_'
   url = "/api/v1/accountable"

@@ -11,8 +11,6 @@ class API::V1::Endpoints::Accountable < Grape::API
         use :login
       end
       post :login do
-        return if session[:user_type]
-
         login = safe_params[:login]
         role  = safe_params[:role]
 
