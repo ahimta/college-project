@@ -27,17 +27,19 @@ class API::V1::Endpoints::Recruiter::Accounts < Grape::API
         end
       end
       put :my_account do
-        account  = safe_params[:recruiter_account]
-        username = account[:username]
+      account  = safe_params[:recruiter_account]
+      username = account[:username]
 
-        unless username == current_user.username or account_manager.username_available? username
-          error('', 409)
-        else
-          current_user.update! account
+      unless username.downcase == current_user.username.downcase or
+        account_manager.username_available? username
 
-          present :account, account, with: entity
-          present :role, Account::AccountManager::AdminRole
-        end
+        error!('', 409)
+      else
+        current_user.update! account
+
+        present :account, current_user, with: entity
+        present :role, Account::AccountManager::RecruiterRole
+      end
       end
     end
 

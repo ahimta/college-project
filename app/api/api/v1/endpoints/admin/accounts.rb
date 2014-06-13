@@ -29,12 +29,14 @@ class API::V1::Endpoints::Admin::Accounts < Grape::API
       account  = safe_params[:admin_account]
       username = account[:username]
 
-      unless username == current_user.username or account_manager.username_available? username
-        error('', 409)
+      unless username.downcase == current_user.username.downcase or
+        account_manager.username_available? username
+
+        error!('', 409)
       else
         current_user.update! account
 
-        present :account, account, with: entity
+        present :account, current_user, with: entity
         present :role, Account::AccountManager::AdminRole
       end
     end

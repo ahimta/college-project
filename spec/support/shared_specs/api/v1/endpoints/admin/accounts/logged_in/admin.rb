@@ -5,6 +5,8 @@ shared_examples '/api/v1/admin/accounts - logged in as an admin' do |args, creat
   resource = 'admin/accounts'
   url = "/api/v1/#{resource}"
   model = Admin::Account
+  role = Account::AccountManager::AdminRole
+  entity = API::V1::Entities::Admin::Account
 
   context 'allowed' do
     it_behaves_like 'controllers/index', *args
@@ -12,6 +14,8 @@ shared_examples '/api/v1/admin/accounts - logged in as an admin' do |args, creat
     it_behaves_like 'controllers/create', *(args + [create_factories])
 
     it_behaves_like 'controllers/accountable/create', model, resource
+    it_behaves_like('controllers/accountable/update', model, resource, entity, role,
+      update_factories)
   end
 
   context 'not allowed' do
