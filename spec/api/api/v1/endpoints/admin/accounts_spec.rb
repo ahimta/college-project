@@ -36,6 +36,7 @@ RSpec.describe API::V1::Endpoints::Admin::Accounts, type: :request do
     before { post "/api/v1/accountable/login", _login }
 
     context 'as an admin' do
+      # WARNING: current_user name is not arbitrary, please don't change :-)
       let!(:current_user) { FactoryGirl.create :admin_account }
 
       let(:role) { Account::AccountManager::AdminRole }
