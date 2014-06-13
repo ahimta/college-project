@@ -17,12 +17,12 @@ RSpec.describe API::V1::Endpoints::Accountable, type: :request do
     context 'allowed' do
       context 'login' do
         context 'as a recruiter' do
-          it_behaves_like('controllers/accountable/login', recruiter[:model], recruiter[:resource],
+          it_behaves_like('/api/v1/accountable/login', recruiter[:model], recruiter[:resource],
             recruiter[:entity], recruiter[:role])
         end
 
         context 'as an admin' do
-          it_behaves_like('controllers/accountable/login', admin[:model], admin[:resource],
+          it_behaves_like('/api/v1/accountable/login', admin[:model], admin[:resource],
             admin[:entity], admin[:role])
         end
       end
@@ -60,9 +60,9 @@ RSpec.describe API::V1::Endpoints::Accountable, type: :request do
       let(:role) { recruiter[:role] }
 
       context 'allowed' do
-        it_behaves_like 'controllers/accountable/logout', recruiter[:model], recruiter[:resource]
+        it_behaves_like '/api/v1/accountable/logout', recruiter[:model], recruiter[:resource]
 
-        it_behaves_like('controllers/accountable/my_account', recruiter[:model],
+        it_behaves_like('/api/v1/accountable/my_account', recruiter[:model],
           recruiter[:resource], recruiter[:entity], recruiter[:role])
       end
 
@@ -80,14 +80,14 @@ RSpec.describe API::V1::Endpoints::Accountable, type: :request do
       let(:role) { admin[:role] }
 
       context 'allowed' do
-        it_behaves_like 'controllers/accountable/logout', admin[:model], admin[:resource]
+        it_behaves_like '/api/v1/accountable/logout', admin[:model], admin[:resource]
 
-        it_behaves_like('controllers/accountable/username_available', recruiter[:resource],
+        it_behaves_like('/api/v1/accountable/username_available', recruiter[:resource],
           recruiter[:role])
 
-        it_behaves_like 'controllers/accountable/username_available', admin[:resource], admin[:role]
+        it_behaves_like '/api/v1/accountable/username_available', admin[:resource], admin[:role]
 
-        it_behaves_like('controllers/accountable/my_account', admin[:model],
+        it_behaves_like('/api/v1/accountable/my_account', admin[:model],
           admin[:resource], admin[:entity], admin[:role])
       end
 

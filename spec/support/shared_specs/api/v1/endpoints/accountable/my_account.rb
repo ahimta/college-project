@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-shared_examples 'controllers/accountable/my_account' do |model, resource, entity, role|
+shared_examples '/api/v1/accountable/my_account' do |model, resource, entity, role|
 
   name = resource[0..-2].split('/').join '_'
-  url = "/api/v1/accountable"
+  url = '/api/v1/accountable/my_account'
 
   let!(:count) { model.count }
   let(:expected_record) { serialized_record(entity, current_user) }
@@ -11,10 +11,10 @@ shared_examples 'controllers/accountable/my_account' do |model, resource, entity
   after { expect(json_response['account']).to eq(expected_record) }
   after { expect(json_response['role']).to eq(role) }
 
-  describe "GET #{url}/my_account" do
+  describe "GET #{url}" do
     before { expect(model.count).to eq(count) }
 
-    it { get "#{url}/my_account" }
+    it { get url }
 
     after { expect(model.where(id: current_user.id).first).to eq(current_user) }
     after { expect(session[:user_id]).to be(current_user.id) }
@@ -23,10 +23,10 @@ shared_examples 'controllers/accountable/my_account' do |model, resource, entity
     after { expect(model.count).to eq(count) }
   end
 
-  describe "DELETE #{url}/my_account" do
+  describe "DELETE #{url}" do
     before { expect(model.count).to eq(count) }
 
-    it { delete "#{url}/my_account" }
+    it { delete url }
 
     after { expect(model.where(id: current_user.id).first).to be(nil) }
     after { expect(session[:user_type]).to be(nil) }

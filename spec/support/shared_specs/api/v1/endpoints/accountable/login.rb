@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-shared_examples 'controllers/accountable/login' do |model, resource, entity, role|
+shared_examples '/api/v1/accountable/login' do |model, resource, entity, role|
 
-  url = "/api/v1/accountable/login"
+  url = '/api/v1/accountable/login'
   name = resource.split('/').join('_')[0..-2]
 
   describe "POST #{url}" do
