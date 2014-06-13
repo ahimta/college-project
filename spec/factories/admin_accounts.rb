@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :admin_account, class: 'Admin::Account' do
     sequence(:full_name) { |n| "admin_full_name#{n}" }
-    sequence(:username)  { |n| "admin_username#{n}" }
+    sequence(:username)  { |n| "aDmiN_useRname#{n}" }
     sequence(:password)  { |n| "admin_password#{n}" }
 
     factory :admin_account_with_correct_password_confirmation do
