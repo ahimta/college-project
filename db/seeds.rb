@@ -10,6 +10,7 @@ Applicant::JobRequest.destroy_all
 Recruiter::Account.destroy_all
 Admin::Account.destroy_all
 
+Recruiter::Account.create! full_name: 'ابن خلدون', username: 'recruiter', password: 'recruiter'
 Admin::Account.create! full_name: 'ابن سينا', username: 'admin', password: 'admin'
 
 job_requests = [
