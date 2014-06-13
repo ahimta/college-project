@@ -55,6 +55,7 @@ RSpec.describe API::V1::Endpoints::Accountable, type: :request do
     before { post "#{url}/login", login }
 
     context 'as a recruiter' do
+      # WARNING: current_user name is not arbitrary, please don't change :-)
       let!(:current_user) { FactoryGirl.create recruiter[:factory] }
       let(:role) { recruiter[:role] }
 
@@ -74,6 +75,7 @@ RSpec.describe API::V1::Endpoints::Accountable, type: :request do
     end
 
     context 'as an admin' do
+      # WARNING: current_user name is not arbitrary, please don't change :-)
       let!(:current_user) { FactoryGirl.create admin[:factory] }
       let(:role) { admin[:role] }
 
