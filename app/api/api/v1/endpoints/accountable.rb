@@ -14,8 +14,7 @@ class API::V1::Endpoints::Accountable < Grape::API
         login = safe_params[:login]
         role  = safe_params[:role]
 
-        user  = Account::AccountManager.new(user_type: role).login(login[:username],
-          login[:password])
+        user  = login(role, login[:username], login[:password])
 
         if user
           session[:user_id] = user.id
@@ -37,11 +36,10 @@ class API::V1::Endpoints::Accountable < Grape::API
 
       params do
         requires :username, type: String, presence: true
-        requires :role, type: String, values: Account::AccountManager::AllRoles
+        requires :role, type: String, values: Account::Roles::AllRoles
       end
       head :username_available do
-        error!('', 409) unless Account::AccountManager.new(user_type: params[:role]).
-          username_available?(params[:username])
+        error!('', 409) unless username_available?(params[:role], params[:username])
       end
 
       delete :logout do

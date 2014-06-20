@@ -69,8 +69,8 @@ class API::V1::Endpoints::Recruiter::Accounts < Grape::API
         requires :username, type: String, presence: true
       end
       head :username_available do
-        error!('', 409) unless Account::AccountManager.username_available?(
-          username: params[:username], role: Account::AccountManager::RecruiterRole)
+        error!('', 409) unless username_available?(Account::AccountManager::RecruiterRole,
+          params[:username])
       end
 
       get do

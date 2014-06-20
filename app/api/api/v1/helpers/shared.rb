@@ -1,5 +1,13 @@
 module API::V1::Helpers::Shared
 
+  def login(role, username, password)
+    Account::AccountManager.new(user_type: role).login(username, password)
+  end
+
+  def username_available?(role, username)
+    Account::AccountManager.new(user_type: role).username_available?(username)
+  end
+
   def logout
     @session.delete :user_type
     @session.delete :user_id
