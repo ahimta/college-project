@@ -58,8 +58,9 @@ class API::V1::Endpoints::Recruiter::Accounts < Grape::API
       post do
         recruiter_account = safe_params[:recruiter_account]
 
-        error!('', 409) unless Account::AccountManager.username_available?(
-          username: recruiter_account[:username], role: Account::AccountManager::RecruiterRole)
+        error!('', 409) unless Account::AccountManager.
+          new(user_type: Account::AccountManager::RecruiterRole).
+          username_available?(recruiter_account[:username])
 
         present :recruiter_account, model.create!(recruiter_account), with: entity
       end

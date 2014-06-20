@@ -14,14 +14,14 @@ class API::V1::Endpoints::Accountable < Grape::API
         login = safe_params[:login]
         role  = safe_params[:role]
 
-        user  = Account::AccountManager.login(username: login[:username],
-          password: login[:password], role: role)
+        user  = Account::AccountManager.new(user_type: role).login(login[:username],
+          login[:password])
 
         if user
           session[:user_id] = user.id
           session[:user_type] = role
 
-          present :account, user, with: account_manager.entity
+          present :account, user, with: session_manager.entity
           present :role, role
         else
           error!('401', 401)
@@ -40,25 +40,25 @@ class API::V1::Endpoints::Accountable < Grape::API
         requires :role, type: String, values: Account::AccountManager::AllRoles
       end
       head :username_available do
-        error!('', 409) unless Account::AccountManager.username_available?(
-          username: params[:username], role: params[:role])
+        error!('', 409) unless Account::AccountManager.new(user_type: params[:role]).
+          username_available?(params[:username])
       end
 
       delete :logout do
-        account_manager.logout
+        logout
       end
 
       namespace :my_account do
         get do
-          present :account, current_user, with: account_manager.entity
-          present :role, account_manager.role
+          present :account, current_user, with: session_manager.entity
+          present :role, session_manager.role
         end
 
         delete do
-          present :account, current_user.destroy, with: account_manager.entity
-          present :role, account_manager.role
+          present :account, current_user.destroy, with: session_manager.entity
+          present :role, session_manager.role
 
-          account_manager.logout
+          logout
         end
       end
     end

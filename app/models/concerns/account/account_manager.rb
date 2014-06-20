@@ -1,60 +1,30 @@
-class Account::AccountManager
+module Account
+  class AccountManager
 
-  RecruiterRole = 'recruiter'
-  StudentRole = 'student'
-  TeacherRole = 'teacher'
-  AdminRole = 'admin'
+    RecruiterRole = Roles::RecruiterRole
+    StudentRole = Roles::StudentRole
+    TeacherRole = Roles::TeacherRole
+    AdminRole = Roles::AdminRole
 
-  AllRoles = [RecruiterRole, StudentRole, TeacherRole, AdminRole]
+    AllRoles = Roles::AllRoles
 
-  def self.login(username:, password:, role:)
-    raise ArgumentError unless AllRoles.include? role
+    def initialize(session)
+      case session[:user_type]
+      when RecruiterRole then @model  = Recruiter::Account
+      when AdminRole then @model  = Admin::Account
+      else raise ArgumentError
+      end
 
-    self.new(user_type: role).login(username, password)
-  end
-
-  def self.username_available?(username:, role:)
-    self.new(user_type: role).username_available? username
-  end
-
-  def initialize(session)
-    case session[:user_type]
-    when RecruiterRole
-      @entity = API::V1::Entities::Recruiter::Account
-      @model  = Recruiter::Account
-    when AdminRole
-      @entity = API::V1::Entities::Admin::Account
-      @model  = Admin::Account
-    else
-      raise ArgumentError
+      @session = session
     end
 
-    @session = session
-  end
+    def login(username, password)
+      @login ||= @model.where(username: username).first.try(:authenticate, password)
+    end
 
-  def role
-    @role ||= @session[:user_type]
-  end
-
-  def entity
-    @entity
-  end
-
-  def current_user
-    @current_user ||= @model.where(id: @session[:user_id]).first if @session[:user_id]
-  end
-
-  def logout
-    @session.delete :user_type
-    @session.delete :user_id
-  end
-
-  def login(username, password)
-    @login ||= @model.where(username: username).first.try(:authenticate, password)
-  end
-
-  def username_available?(username)
-    @taken ||= @model.where('lower(username) = ?', username.downcase).first
-    not @taken
+    def username_available?(username)
+      @taken ||= @model.where('lower(username) = ?', username.downcase).first
+      not @taken
+    end
   end
 end

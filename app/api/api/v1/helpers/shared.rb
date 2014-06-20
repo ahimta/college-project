@@ -1,5 +1,10 @@
 module API::V1::Helpers::Shared
 
+  def logout
+    @session.delete :user_type
+    @session.delete :user_id
+  end
+
   def authenticate!
     error!('Unauthorized Access', 401) unless current_user
   end
@@ -14,12 +19,16 @@ module API::V1::Helpers::Shared
       session[:user_type] == Account::AccountManager::RecruiterRole
   end
 
+  def session_manager
+    @session_manager ||= Account::SessionManager.new session
+  end
+
   def account_manager
     @account_manager ||= Account::AccountManager.new(session)
   end
 
   def current_user
-    @current_user ||= account_manager.current_user if session[:user_type]
+    @current_user ||= session_manager.current_user if session[:user_type]
   end
 
   def safe_params
