@@ -2,7 +2,8 @@ require 'spec_helper'
 
 shared_examples '/api/v1/applicant/job_requests - logged in as an admin' do |args, factories|
 
-  url = '/api/v1/applicant/job_requests'
+  resource = 'applicant/job_requests'
+  url = "/api/v1/#{resource}"
 
   context 'allowed' do
     it_behaves_like 'controllers/create', *(args + [factories])
@@ -28,5 +29,9 @@ shared_examples '/api/v1/applicant/job_requests - logged in as an admin' do |arg
       it { put "#{url}/99/accept" }
       it { put "#{url}/99/reject" }
     end
+  end
+
+  context 'current user user deleted while logged in' do
+    it_behaves_like 'accountable - logged in - deleted', resource
   end
 end

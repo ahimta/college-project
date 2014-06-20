@@ -17,4 +17,8 @@ shared_examples '/api/v1/recruiter/accounts - logged in as an admin' do |args, c
 
   context 'not allowed' do
   end
+
+  context 'current user user deleted while logged in' do
+    it_behaves_like 'accountable - logged in - deleted', resource
+  end
 end

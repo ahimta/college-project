@@ -2,7 +2,8 @@ require 'spec_helper'
 
 shared_examples '/api/v1/admin/accounts - logged in as a recruiter' do |args, create_factories, update_factories|
 
-  url = '/api/v1/admin/accounts'
+  resource = 'admin/accounts'
+  url = "/api/v1/#{resource}"
 
   context 'allowed' do
   end
@@ -25,5 +26,9 @@ shared_examples '/api/v1/admin/accounts - logged in as a recruiter' do |args, cr
     context 'destroy' do
       it { delete "#{url}/99" }
     end
+  end
+
+  context 'current user user deleted while logged in' do
+    it_behaves_like 'accountable - logged in - deleted', resource
   end
 end

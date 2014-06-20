@@ -32,4 +32,8 @@ shared_examples '/api/v1/recruiter/accounts - logged in as a recruiter' do |args
       it { delete "#{url}/99" }
     end
   end
+
+  context 'current user user deleted while logged in' do
+    it_behaves_like 'accountable - logged in - deleted', resource
+  end
 end
