@@ -1,16 +1,16 @@
 module API::V1::Helpers::Shared
 
   def authenticate!
-    error!('Unauthorized Access', 401) unless session[:user_id] and session[:user_type]
+    error!('Unauthorized Access', 401) unless current_user
   end
 
   def authenticate_admin!
-    error!('Unauthorized Access', 401) unless session[:user_id] and
+    error!('Unauthorized Access', 401) unless current_user and
       session[:user_type] == Account::AccountManager::AdminRole
   end
 
   def authenticate_recruiter!
-    error!('Unauthorized Access', 401) unless session[:user_id] and
+    error!('Unauthorized Access', 401) unless current_user and
       session[:user_type] == Account::AccountManager::RecruiterRole
   end
 
@@ -19,7 +19,7 @@ module API::V1::Helpers::Shared
   end
 
   def current_user
-    @current_user ||= account_manager.current_user if session[:user_id] and session[:user_type]
+    @current_user ||= account_manager.current_user if session[:user_type]
   end
 
   def safe_params

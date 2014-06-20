@@ -15,6 +15,6 @@ shared_examples '/api/v1/applicant/job_requests - logged in as a recruiter' do |
   end
 
   context 'current user user deleted while logged in' do
-    it_behaves_like 'accountable - logged in - deleted', resource
+    it_behaves_like 'accountable - logged in - deleted', resource, (args + [factories])
   end
 end

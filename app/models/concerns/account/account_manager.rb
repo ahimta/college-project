@@ -41,7 +41,7 @@ class Account::AccountManager
   end
 
   def current_user
-    @current_user ||= @model.find @session[:user_id] if @session[:user_id]
+    @current_user ||= @model.where(id: @session[:user_id]).first if @session[:user_id]
   end
 
   def logout

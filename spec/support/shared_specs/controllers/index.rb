@@ -11,7 +11,7 @@ shared_examples 'controllers/index' do |model, entity, resource|
 
     after { expect(response.status).to eq(200) }
 
-    context 'empty' do
+    xcontext 'empty' do
       let!(:_) { model.destroy_all }
 
       before { expect(model.count).to be_zero }
