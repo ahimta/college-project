@@ -23,8 +23,7 @@ module Account
     end
 
     def username_available?(username)
-      @taken ||= @model.where('lower(username) = ?', username.downcase).first
-      not @taken
+      !@model.where('lower(username) = ?', username.downcase).first
     end
   end
 end
