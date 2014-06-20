@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-shared_examples '/api/v1/applicant/job_requests - not_logged_in' do |args|
+shared_examples '/api/v1/applicant/job_requests - not logged in' do |args|
 
   url = '/api/v1/applicant/job_requests'
 

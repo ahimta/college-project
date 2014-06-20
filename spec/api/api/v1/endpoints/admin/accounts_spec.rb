@@ -55,6 +55,6 @@ RSpec.describe API::V1::Endpoints::Admin::Accounts, type: :request do
   end
 
   context 'not logged in' do
-    it_behaves_like "#{url} - not_logged_in"
+    it_behaves_like "#{url} - not logged in"
   end
 end

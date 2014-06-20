@@ -51,12 +51,12 @@ describe API::V1::Endpoints::Recruiter::Accounts, type: :request do
 
       let(:role) { Account::AccountManager::RecruiterRole }
 
-      it_behaves_like("#{url} - logged_in as a recruiter", args, create_factories,
+      it_behaves_like("#{url} - logged in as a recruiter", args, create_factories,
         update_factories)
     end
   end
 
   context 'not logged in' do
-    it_behaves_like "#{url} - not_logged_in"
+    it_behaves_like "#{url} - not logged in"
   end
 end

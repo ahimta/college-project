@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-shared_examples '/api/v1/admin/accounts - not_logged_in' do
+shared_examples '/api/v1/admin/accounts - not logged in' do
 
   url = "/api/v1/admin/accounts"
 

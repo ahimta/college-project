@@ -32,11 +32,11 @@ describe API::V1::Endpoints::Applicant::JobRequests, type: :request do
 
       let(:role) { Account::AccountManager::RecruiterRole }
 
-      it_behaves_like "#{url} - logged_in as a recruiter", args, factories
+      it_behaves_like "#{url} - logged in as a recruiter", args, factories
     end
   end
 
   context 'not logged in' do
-    it_behaves_like "#{url} - not_logged_in", (args + [factories])
+    it_behaves_like "#{url} - not logged in", (args + [factories])
   end
 end

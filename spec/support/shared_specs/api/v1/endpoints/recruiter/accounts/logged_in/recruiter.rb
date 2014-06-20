@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-shared_examples '/api/v1/recruiter/accounts - logged_in as a recruiter' do |args, create_factories, update_factories|
+shared_examples '/api/v1/recruiter/accounts - logged in as a recruiter' do |args, create_factories, update_factories|
 
   resource = 'recruiter/accounts'
   url = '/api/v1/recruiter/accounts'
