@@ -11,10 +11,10 @@ module API::V1::Params::Applicant::JobRequest
       requires :specialization, type: String, present: true, desc: 'Specialization.'
       requires :degree, type: String, present: true, desc: 'Degree.'
 
-      optional :bachelor_certificate_url, type: Rack::Multipart::UploadedFile
-      optional :master_certificate_url, type: Rack::Multipart::UploadedFile
-      optional :doctorate_certificate_url, type: Rack::Multipart::UploadedFile
-      optional :cv_url, type: Rack::Multipart::UploadedFile
+      optional :bachelor_certificate, type: Rack::Multipart::UploadedFile
+      optional :master_certificate, type: Rack::Multipart::UploadedFile
+      optional :doctorate_certificate, type: Rack::Multipart::UploadedFile
+      optional :cv, type: Rack::Multipart::UploadedFile
     end
   end
 end
