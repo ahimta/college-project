@@ -6,16 +6,16 @@ class API::V1::Entities::Applicant::JobRequest < API::V1::Entities::Base
     applicant.accepted_status
   end
 
-  expose :bachelor_certificate do |applicant, _|
+  expose :bachelor_certificate_url do |applicant, _|
     applicant.bachelor_certificate.url
   end
-  expose :master_certificate do |applicant, _|
+  expose :master_certificate_url do |applicant, _|
     applicant.master_certificate.url
   end
-  expose :bachelor_certificate do |applicant, _|
+  expose :doctorate_certificate_url do |applicant, _|
     applicant.doctorate_certificate.url
   end
-  expose :bachelor_certificate do |applicant, _|
+  expose :cv_url do |applicant, _|
     applicant.cv.url
   end
 end
