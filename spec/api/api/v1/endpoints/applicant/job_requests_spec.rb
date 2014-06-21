@@ -8,7 +8,10 @@ describe API::V1::Endpoints::Applicant::JobRequests, type: :request do
   entity = API::V1::Entities::Applicant::JobRequest
 
   args = [model, entity, resource]
-  factories = {valid: [:applicant_job_request], invalid: [:invalid_applicant_job_request]}
+  factories = {
+    valid: [:applicant_job_request, :applicant_job_request_with_invalid_file],
+    invalid: [:invalid_applicant_job_request]
+  }
 
   context 'logged in' do
     let(:_login) {

@@ -11,5 +11,9 @@ FactoryGirl.define do
     factory :invalid_applicant_job_request do
       phone ''
     end
+
+    factory :applicant_job_request_with_invalid_file do
+      sequence(:cv) { |n| "Hi there#{n}" }
+    end
   end
 end
