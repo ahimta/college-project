@@ -16,6 +16,8 @@ gem 'grape-entity', '~> 0.4.0'
 gem 'factory_girl_rails', '~> 4.4.0'
 gem 'rack-cors', require: 'rack/cors'
 
+gem 'paperclip', '~> 4.1.0'
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
   gem 'sqlite3', '~> 1.3.0'

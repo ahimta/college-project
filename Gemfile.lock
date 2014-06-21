@@ -48,6 +48,10 @@ GEM
     builder (3.2.2)
     celluloid (0.15.2)
       timers (~> 1.1.0)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.4)
+      climate_control (>= 0.0.3, < 1.0)
     code_analyzer (0.4.5)
       sexp_processor
     codeclimate-test-reporter (0.3.0)
@@ -117,6 +121,11 @@ GEM
     multi_json (1.10.1)
     multi_xml (0.5.5)
     newrelic_rpm (3.8.1.221)
+    paperclip (4.1.1)
+      activemodel (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      cocaine (~> 0.5.3)
+      mime-types
     pg (0.17.1)
     polyglot (0.3.5)
     pry (0.10.0)
@@ -257,6 +266,7 @@ DEPENDENCIES
   guard-bundler (~> 2.0.0)
   guard-rspec (~> 4.2.0)
   newrelic_rpm
+  paperclip (~> 4.1.0)
   pg
   puma
   rack-cors
