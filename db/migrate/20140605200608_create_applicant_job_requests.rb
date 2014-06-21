@@ -7,6 +7,12 @@ class CreateApplicantJobRequests < ActiveRecord::Migration
       t.string :degree, null: false
       t.string :phone, null: false
 
+      t.attachment :bachelor_certificate
+      t.attachment :master_certificate
+      t.attachment :doctorate_certificate
+      t.attachment :bachelor_certificate
+      t.attachment :cv
+
       t.boolean :accepted
 
       t.timestamps

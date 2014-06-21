@@ -10,6 +10,11 @@ module API::V1::Params::Applicant::JobRequest
       requires :address, type: String, present: true, desc: 'Address.'
       requires :specialization, type: String, present: true, desc: 'Specialization.'
       requires :degree, type: String, present: true, desc: 'Degree.'
+
+      optional :bachelor_certificate
+      optional :master_certificate
+      optional :doctorate_certificate
+      optional :cv
     end
   end
 end

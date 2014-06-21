@@ -20,7 +20,10 @@ class API::V1::Endpoints::Applicant::JobRequests < Grape::API
         use :applicant_job_request
       end
       post do
-        present :applicant_job_request, model.create!(safe_params[:applicant_job_request]), with: entity
+        record = model.new safe_params[:applicant_job_request]
+        if record.save then present :applicant_job_request, record, with: entity
+        else error! record.errors, 400
+        end
       end
     end
 
@@ -49,8 +52,10 @@ class API::V1::Endpoints::Applicant::JobRequests < Grape::API
           use :applicant_job_request
         end
         put do
-          @record.update!(safe_params[:applicant_job_request])
-          present :applicant_job_request, @record, with: entity
+          @record.attributes = safe_params[:applicant_job_request]
+          if @record.save then present :applicant_job_request, @record, with: entity
+          else error! @record.errors, 400
+          end
         end
 
         desc 'Delete an applicant.'

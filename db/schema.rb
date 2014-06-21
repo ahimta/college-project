@@ -25,11 +25,27 @@ ActiveRecord::Schema.define(version: 20140611105715) do
   add_index "admin_accounts", ["username"], name: "index_admin_accounts_on_username", unique: true
 
   create_table "applicant_job_requests", force: true do |t|
-    t.string   "specialization", null: false
-    t.string   "full_name",      null: false
-    t.string   "address",        null: false
-    t.string   "degree",         null: false
-    t.string   "phone",          null: false
+    t.string   "specialization",                     null: false
+    t.string   "full_name",                          null: false
+    t.string   "address",                            null: false
+    t.string   "degree",                             null: false
+    t.string   "phone",                              null: false
+    t.string   "bachelor_certificate_file_name"
+    t.string   "bachelor_certificate_content_type"
+    t.integer  "bachelor_certificate_file_size"
+    t.datetime "bachelor_certificate_updated_at"
+    t.string   "master_certificate_file_name"
+    t.string   "master_certificate_content_type"
+    t.integer  "master_certificate_file_size"
+    t.datetime "master_certificate_updated_at"
+    t.string   "doctorate_certificate_file_name"
+    t.string   "doctorate_certificate_content_type"
+    t.integer  "doctorate_certificate_file_size"
+    t.datetime "doctorate_certificate_updated_at"
+    t.string   "cv_file_name"
+    t.string   "cv_content_type"
+    t.integer  "cv_file_size"
+    t.datetime "cv_updated_at"
     t.boolean  "accepted"
     t.datetime "created_at"
     t.datetime "updated_at"
