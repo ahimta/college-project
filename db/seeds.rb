@@ -17,7 +17,7 @@ job_requests = [
   {full_name: 'الخليل أحمد الفراهيدي', phone: '0512345678', address: 'عمان',
     specialization: 'علوم شرعية', degree: 'أستاذ'},
   {full_name: 'ابن خلدون', phone: '0521345678', address: 'تونس',
-    specialization: 'فيزياء', degree: 'أستذ'},
+    specialization: 'فيزياء', degree: 'أستاذ'},
   {full_name: 'ابن سينا', phone: '0521345678', address: 'بخارى',
     specialization: 'كيمياء', degree: 'أستاذ'},
 ]
